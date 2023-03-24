@@ -1,5 +1,5 @@
 {
-  "name": "template-typescript",
+  "name": "graphql-generator-from-entity-definitions",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HiromiShikata/template-typescript.git"
+    "url": "git+https://github.com/HiromiShikata/graphql-generator-from-entity-definitions.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HiromiShikata/template-typescript/issues"
+    "url": "https://github.com/HiromiShikata/graphql-generator-from-entity-definitions/issues"
   },
   "release": {
     "plugins": [
@@ -32,7 +32,7 @@
       "main"
     ]
   },
-  "homepage": "https://github.com/HiromiShikata/template-typescript#readme",
+  "homepage": "https://github.com/HiromiShikata/graphql-generator-from-entity-definitions#readme",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
