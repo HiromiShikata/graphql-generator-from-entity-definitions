@@ -1,0 +1,9 @@
+*.xml
+.gitignore
+.prettierignore
+.gitkeep
+
+
+.idea
+reports
+dist
