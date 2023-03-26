@@ -11,6 +11,9 @@
     "build": "tsc",
     "test": "jest"
   },
+  "bin": {
+    "graphql-generator-from-entity-definitions": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HiromiShikata/graphql-generator-from-entity-definitions.git"
