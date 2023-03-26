@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //./src/index.ts
 import { Command } from 'commander';
 import { GenerateGraphqlSchemaUseCase } from './domain/usecases/GenerateGraphqlSchemaUseCase';
