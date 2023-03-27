@@ -80,6 +80,8 @@ type NotFoundError {
   stack: String
 }
 
+scalar Date
+
 type User {
   id: String!
   name: String!
@@ -515,6 +517,8 @@ type Mutation {
       const { useCase } = createUseCaseAndMockRepositories();
 
       const expectedTypeDefs = `
+scalar Date
+
 type User {
   id: String!
   name: String!

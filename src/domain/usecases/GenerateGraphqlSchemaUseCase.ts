@@ -33,6 +33,7 @@ ${this.generateMutation(entityDefinitions)}
   };
   generateTypes = (entityDefinitions: EntityDefinition[]): string => {
     const typeDefs: string[] = [];
+    typeDefs.push(`scalar Date\n\n`)
 
     for (const entity of entityDefinitions) {
       const properties: string[] = [];
