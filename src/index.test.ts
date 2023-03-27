@@ -29,8 +29,10 @@ type NotFoundError {
   stack: String
 }
 
+scalar Date
+
 type User {
-  id: String!
+  id: ID!
   name: String!
 }
 

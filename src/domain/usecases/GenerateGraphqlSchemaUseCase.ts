@@ -33,7 +33,7 @@ ${this.generateMutation(entityDefinitions)}
   };
   generateTypes = (entityDefinitions: EntityDefinition[]): string => {
     const typeDefs: string[] = [];
-    typeDefs.push(`scalar Date\n\n`)
+    typeDefs.push(`scalar Date\n\n`);
 
     for (const entity of entityDefinitions) {
       const properties: string[] = [];
@@ -43,6 +43,8 @@ ${this.generateMutation(entityDefinitions)}
 
         const type = property.isReference
           ? 'String!'
+          : name === 'id'
+          ? 'ID!'
           : this.mapToGraphQLType(property.propertyType) + '!';
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
