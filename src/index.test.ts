@@ -34,6 +34,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
+  pet: String
 }
 
 
@@ -61,6 +62,7 @@ type Query {
 
 input CreateUserInput {
   name: String!
+  pet: String
   clientMutationId: String
 }
 
@@ -77,6 +79,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
+  pet: String
   clientMutationId: String
 }
 

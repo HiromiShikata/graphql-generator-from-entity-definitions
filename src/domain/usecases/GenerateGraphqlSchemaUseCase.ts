@@ -45,7 +45,8 @@ ${this.generateMutation(entityDefinitions)}
           ? 'String!'
           : name === 'id'
           ? 'ID!'
-          : this.mapToGraphQLType(property.propertyType) + '!';
+          : this.mapToGraphQLType(property.propertyType) +
+            (property.isNullable ? '' : '!');
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
           properties.push(
@@ -174,7 +175,7 @@ ${errorTypes.join('\n')}`;
             ? `  ${this.uncapitalize(property.propertyType)}Id: String!`
             : `  ${property.name}: ${this.mapToGraphQLType(
                 property.propertyType,
-              )}!`,
+              )}` + (property.isNullable ? '' : '!'),
         )
         .join('\n');
       const notFoundError = entity.properties.some(
