@@ -22,6 +22,13 @@ describe('AstEntityDefinitionRepository', () => {
               name: 'name',
               propertyType: 'string',
             },
+
+            {
+              isNullable: true,
+              isReference: false,
+              name: 'pet',
+              propertyType: 'string',
+            },
           ],
           typeName: 'User',
         },

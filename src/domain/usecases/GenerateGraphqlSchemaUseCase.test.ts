@@ -8,38 +8,72 @@ const entityDefinitions: EntityDefinition[] = [
   {
     typeName: 'User',
     properties: [
-      { name: 'id', propertyType: 'string', isReference: false },
-      { name: 'name', propertyType: 'string', isReference: false },
+      {
+        name: 'id',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+      },
+      {
+        name: 'name',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+      },
+      {
+        name: 'pet',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: true,
+      },
       {
         name: 'deactivated',
         propertyType: 'boolean',
         isReference: false,
+        isNullable: false,
       },
     ],
   },
   {
     typeName: 'Group',
     properties: [
-      { name: 'id', propertyType: 'string', isReference: false },
-      { name: 'name', propertyType: 'string', isReference: false },
+      {
+        name: 'id',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+      },
+      {
+        name: 'name',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+      },
     ],
   },
 
   {
     typeName: 'UserGroup',
     properties: [
-      { name: 'id', propertyType: 'string', isReference: false },
+      {
+        name: 'id',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+      },
       {
         name: 'userId',
         propertyType: 'User',
         isReference: true,
         isUnique: false,
+        isNullable: false,
       },
       {
         name: 'groupId',
         propertyType: 'Group',
         isReference: true,
         isUnique: false,
+        isNullable: false,
       },
     ],
   },
@@ -85,6 +119,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
+  pet: String
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
 }
@@ -166,6 +201,7 @@ type Query {
 
 input CreateUserInput {
   name: String!
+  pet: String
   deactivated: Boolean!
   clientMutationId: String
 }
@@ -183,6 +219,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
+  pet: String
   deactivated: Boolean!
   clientMutationId: String
 }
@@ -347,6 +384,7 @@ type Mutation {
       const expectedMutation = `
 input CreateUserInput {
   name: String!
+  pet: String
   deactivated: Boolean!
   clientMutationId: String
 }
@@ -364,6 +402,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
+  pet: String
   deactivated: Boolean!
   clientMutationId: String
 }
@@ -522,6 +561,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
+  pet: String
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
 }
