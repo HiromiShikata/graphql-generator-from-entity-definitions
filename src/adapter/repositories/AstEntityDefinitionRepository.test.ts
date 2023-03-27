@@ -11,11 +11,13 @@ describe('AstEntityDefinitionRepository', () => {
         {
           properties: [
             {
+              isNullable: false,
               isReference: false,
               name: 'id',
               propertyType: 'string',
             },
             {
+              isNullable: false,
               isReference: false,
               name: 'name',
               propertyType: 'string',

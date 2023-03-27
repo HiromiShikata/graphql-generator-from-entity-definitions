@@ -83,20 +83,20 @@ type NotFoundError {
 scalar Date
 
 type User {
-  id: String!
+  id: ID!
   name: String!
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
 }
 
 type Group {
-  id: String!
+  id: ID!
   name: String!
   userGroupList: [UserGroupListResult!]!
 }
 
 type UserGroup {
-  id: String!
+  id: ID!
   userId: String!
   user: UserResult!
   groupId: String!
@@ -520,20 +520,20 @@ type Mutation {
 scalar Date
 
 type User {
-  id: String!
+  id: ID!
   name: String!
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
 }
 
 type Group {
-  id: String!
+  id: ID!
   name: String!
   userGroupList: [UserGroupListResult!]!
 }
 
 type UserGroup {
-  id: String!
+  id: ID!
   userId: String!
   user: UserResult!
   groupId: String!
