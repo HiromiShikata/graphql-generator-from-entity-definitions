@@ -121,24 +121,23 @@ union ${entity.typeName}ListResult =
     }
 
     const queryMethods = entityDefinitions.map((entity) => {
+      const queryListParameter = entity.properties.find((p) => p.isReference)
+        ? `(${entity.properties
+            .filter(
+              (p): p is EntityPropertyDefinitionReferencedObject =>
+                p.isReference,
+            )
+            .map((p) => `${p.name}: String`)
+            .join(', ')})`
+        : ``;
       return `  ${this.uncapitalize(entity.typeName)}(id: ID!): ${
         entity.typeName
       }Result!
-  ${this.uncapitalize(entity.typeName)}List(limit: Int, offset: Int): ${
+  ${this.uncapitalize(entity.typeName)}List${queryListParameter}: ${
         entity.typeName
       }ListResult!`;
     });
 
-    //   const queryMethods: string[] = [];
-    //   for (const entity of entityDefinitions) {
-    //     const queryMethod = `  ${this.uncapitalize(entity.typeName)}(id: ID!): ${
-    //       entity.typeName
-    //     }Result!
-    // ${this.uncapitalize(entity.typeName)}List(limit: Int, offset: Int): ${
-    //       entity.typeName
-    //     }ListResult!`;
-    //     queryMethods.push(queryMethod);
-    //   }
     const query = `${resultTypes.join(`\n`)}
 type Query {
 ${queryMethods.join('\n')}

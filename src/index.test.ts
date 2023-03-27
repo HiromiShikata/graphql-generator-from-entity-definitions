@@ -56,7 +56,7 @@ union UserListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList(limit: Int, offset: Int): UserListResult!
+  userList: UserListResult!
 }
 
 input CreateUserInput {
