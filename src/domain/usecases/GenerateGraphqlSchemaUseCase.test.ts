@@ -157,11 +157,11 @@ union UserGroupListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList(limit: Int, offset: Int): UserListResult!
+  userList: UserListResult!
   group(id: ID!): GroupResult!
-  groupList(limit: Int, offset: Int): GroupListResult!
+  groupList: GroupListResult!
   userGroup(id: ID!): UserGroupResult!
-  userGroupList(limit: Int, offset: Int): UserGroupListResult!
+  userGroupList(userId: String, groupId: String): UserGroupListResult!
 }
 
 input CreateUserInput {
@@ -641,11 +641,11 @@ union UserGroupListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList(limit: Int, offset: Int): UserListResult!
+  userList: UserListResult!
   group(id: ID!): GroupResult!
-  groupList(limit: Int, offset: Int): GroupListResult!
+  groupList: GroupListResult!
   userGroup(id: ID!): UserGroupResult!
-  userGroupList(limit: Int, offset: Int): UserGroupListResult!
+  userGroupList(userId: String, groupId: String): UserGroupListResult!
 } 
 `;
 
