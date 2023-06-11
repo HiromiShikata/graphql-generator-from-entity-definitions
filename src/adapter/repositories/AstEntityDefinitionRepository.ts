@@ -7,6 +7,6 @@ export class AstEntityDefinitionRepository
   implements EntityDefinitionRepository
 {
   find = async (path: string): Promise<EntityDefinition[]> => {
-    return getEntityDefinitions(path);
+    return await getEntityDefinitions(path);
   };
 }

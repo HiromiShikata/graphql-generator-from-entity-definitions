@@ -6,71 +6,78 @@ import { EntityDefinition } from '../entities/EntityDefinition';
 
 const entityDefinitions: EntityDefinition[] = [
   {
-    typeName: 'User',
+    name: 'User',
     properties: [
       {
         name: 'id',
         propertyType: 'string',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
       {
         name: 'name',
         propertyType: 'string',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
       {
         name: 'pet',
         propertyType: 'string',
         isReference: false,
         isNullable: true,
+        acceptableValues: null,
       },
       {
         name: 'deactivated',
         propertyType: 'boolean',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
     ],
   },
   {
-    typeName: 'Group',
+    name: 'Group',
     properties: [
       {
         name: 'id',
         propertyType: 'string',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
       {
         name: 'name',
         propertyType: 'string',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
     ],
   },
 
   {
-    typeName: 'UserGroup',
+    name: 'UserGroup',
     properties: [
       {
         name: 'id',
         propertyType: 'string',
         isReference: false,
         isNullable: false,
+        acceptableValues: null,
       },
       {
         name: 'userId',
-        propertyType: 'User',
+        targetEntityDefinitionName: 'User',
         isReference: true,
         isUnique: false,
         isNullable: false,
       },
       {
         name: 'groupId',
-        propertyType: 'Group',
+        targetEntityDefinitionName: 'Group',
         isReference: true,
         isUnique: false,
         isNullable: false,

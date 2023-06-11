@@ -50,8 +50,8 @@ ${this.generateMutation(entityDefinitions)}
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
           properties.push(
-            `  ${this.uncapitalize(property.propertyType)}: ${
-              property.propertyType
+            `  ${this.uncapitalize(property.targetEntityDefinitionName)}: ${
+              property.targetEntityDefinitionName
             }Result!`,
           );
         }
@@ -64,20 +64,20 @@ ${this.generateMutation(entityDefinitions)}
               relatedProperty,
             ): relatedProperty is EntityPropertyDefinitionReferencedObject =>
               relatedProperty.isReference &&
-              relatedProperty.propertyType === entity.typeName,
+              relatedProperty.targetEntityDefinitionName === entity.name,
           )
           .map((relatedProperty) =>
             relatedProperty.isUnique
-              ? `  ${this.uncapitalize(relatedEntity.typeName)}: ${
-                  relatedEntity.typeName
+              ? `  ${this.uncapitalize(relatedEntity.name)}: ${
+                  relatedEntity.name
                 }!`
-              : `  ${this.uncapitalize(relatedEntity.typeName)}List: [${
-                  relatedEntity.typeName
+              : `  ${this.uncapitalize(relatedEntity.name)}List: [${
+                  relatedEntity.name
                 }ListResult!]!`,
           ),
       );
 
-      typeDefs.push(`type ${entity.typeName} {
+      typeDefs.push(`type ${entity.name} {
 ${properties.join('\n')}${
         relatedEntities.length > 0 ? '\n' + relatedEntities.join('\n') : ``
       }
@@ -101,19 +101,19 @@ ${properties.join('\n')}${
   generateQuery = (entityDefinitions: EntityDefinition[]): string => {
     const resultTypes: string[] = [];
     for (const entity of entityDefinitions) {
-      const resultType = `union ${entity.typeName}Result =
-    ${entity.typeName}
+      const resultType = `union ${entity.name}Result =
+    ${entity.name}
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
-type ${entity.typeName}List {
-  items: [${entity.typeName}!]!
+type ${entity.name}List {
+  items: [${entity.name}!]!
   total: Int!
 }
 
-union ${entity.typeName}ListResult =
-    ${entity.typeName}List
+union ${entity.name}ListResult =
+    ${entity.name}List
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -131,11 +131,11 @@ union ${entity.typeName}ListResult =
             .map((p) => `${p.name}: String`)
             .join(', ')})`
         : ``;
-      return `  ${this.uncapitalize(entity.typeName)}(id: ID!): ${
-        entity.typeName
+      return `  ${this.uncapitalize(entity.name)}(id: ID!): ${
+        entity.name
       }Result!
-  ${this.uncapitalize(entity.typeName)}List${queryListParameter}: ${
-        entity.typeName
+  ${this.uncapitalize(entity.name)}List${queryListParameter}: ${
+        entity.name
       }ListResult!`;
     });
 
@@ -167,12 +167,14 @@ ${errorTypes.join('\n')}`;
   generateMutation = (entityDefinitions: EntityDefinition[]): string => {
     const mutationTypes: string[] = [];
     for (const entity of entityDefinitions) {
-      const uncapitalizedEntityName = this.uncapitalize(entity.typeName);
+      const uncapitalizedEntityName = this.uncapitalize(entity.name);
       const properties = entity.properties
         .filter((property) => property.name != 'id')
         .map((property) =>
           property.isReference
-            ? `  ${this.uncapitalize(property.propertyType)}Id: String!`
+            ? `  ${this.uncapitalize(
+                property.targetEntityDefinitionName,
+              )}Id: String!`
             : `  ${property.name}: ${this.mapToGraphQLType(
                 property.propertyType,
               )}` + (property.isNullable ? '' : '!'),
@@ -184,50 +186,50 @@ ${errorTypes.join('\n')}`;
         ? '\n  | NotFoundError'
         : '';
 
-      const mutationType = `input Create${entity.typeName}Input {
+      const mutationType = `input Create${entity.name}Input {
 ${properties}
   clientMutationId: String
 }
 
-type Create${entity.typeName}Payload {
-  ${uncapitalizedEntityName}: ${entity.typeName}!
+type Create${entity.name}Payload {
+  ${uncapitalizedEntityName}: ${entity.name}!
   clientMutationId: String
 }
 
-union Create${entity.typeName}PayloadResult =
-    Create${entity.typeName}Payload
+union Create${entity.name}PayloadResult =
+    Create${entity.name}Payload
   | PermissionDeniedError
   | UnknownRuntimeError${notFoundError}
 
-input Update${entity.typeName}Input {
+input Update${entity.name}Input {
   id: ID!
 ${properties}
   clientMutationId: String
 }
 
-type Update${entity.typeName}Payload {
-  ${uncapitalizedEntityName}: ${entity.typeName}!
+type Update${entity.name}Payload {
+  ${uncapitalizedEntityName}: ${entity.name}!
   clientMutationId: String
 }
 
-union Update${entity.typeName}PayloadResult =
-    Update${entity.typeName}Payload
+union Update${entity.name}PayloadResult =
+    Update${entity.name}Payload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
 
-input Delete${entity.typeName}Input {
+input Delete${entity.name}Input {
   id: ID!
   clientMutationId: String
 }
 
-type Delete${entity.typeName}Payload {
+type Delete${entity.name}Payload {
   id: ID!
   clientMutationId: String
 }
 
-union Delete${entity.typeName}PayloadResult =
-    Delete${entity.typeName}Payload
+union Delete${entity.name}PayloadResult =
+    Delete${entity.name}Payload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -236,9 +238,9 @@ union Delete${entity.typeName}PayloadResult =
     }
 
     const mutations = entityDefinitions.map((entity) => {
-      return `  create${entity.typeName}(input: Create${entity.typeName}Input!): Create${entity.typeName}PayloadResult!
-  update${entity.typeName}(input: Update${entity.typeName}Input!): Update${entity.typeName}PayloadResult!
-  delete${entity.typeName}(input: Delete${entity.typeName}Input!): Delete${entity.typeName}PayloadResult!`;
+      return `  create${entity.name}(input: Create${entity.name}Input!): Create${entity.name}PayloadResult!
+  update${entity.name}(input: Update${entity.name}Input!): Update${entity.name}PayloadResult!
+  delete${entity.name}(input: Delete${entity.name}Input!): Delete${entity.name}PayloadResult!`;
     });
 
     //   const mutations: string[] = [];
