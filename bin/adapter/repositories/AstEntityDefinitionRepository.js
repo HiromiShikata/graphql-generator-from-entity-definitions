@@ -5,7 +5,7 @@ const index_1 = require('ast-to-entity-definitions/bin/adapter/entry-points/func
 class AstEntityDefinitionRepository {
   constructor() {
     this.find = async (path) => {
-      return (0, index_1.getEntityDefinitions)(path);
+      return await (0, index_1.getEntityDefinitions)(path);
     };
   }
 }
