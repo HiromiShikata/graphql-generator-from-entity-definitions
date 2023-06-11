@@ -9,3 +9,5 @@ reports
 dist
 *.txt
 *.map
+*.orig
+*.rej
