@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run: npm ci
-      - run: npm run format && git --no-pager diff && exit $(git diff | wc -l)
+      - run: npm run fmt && git --no-pager diff && exit $(git diff | wc -l)
       - run: npx commitlint --from=main
       - run: npm run build
       - run: npm run test
