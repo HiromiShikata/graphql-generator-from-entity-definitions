@@ -1,6 +1,6 @@
 import { EntityPropertyDefinition } from './EntityPropertyDefinition';
 
 export type EntityDefinition = {
-  typeName: string;
+  name: string;
   properties: EntityPropertyDefinition[];
 };

@@ -9,28 +9,30 @@ describe('AstEntityDefinitionRepository', () => {
       const result = await repository.find(path);
       expect(result).toEqual([
         {
+          name: 'User',
           properties: [
             {
+              acceptableValues: null,
               isNullable: false,
               isReference: false,
               name: 'id',
               propertyType: 'string',
             },
             {
+              acceptableValues: null,
               isNullable: false,
               isReference: false,
               name: 'name',
               propertyType: 'string',
             },
-
             {
+              acceptableValues: null,
               isNullable: true,
               isReference: false,
               name: 'pet',
               propertyType: 'string',
             },
           ],
-          typeName: 'User',
         },
       ]);
     });
