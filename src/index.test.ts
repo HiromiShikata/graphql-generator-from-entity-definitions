@@ -5,7 +5,7 @@ describe('commander program', () => {
     const output = execSync(
       'npx ts-node ./src/index.ts ./src/adapter/repositories/_testdata -o ./tmp/schema.graphql',
     ).toString();
-    expect(output.trim()).toBe(`enum ErrorCode {
+    const expectedContent = `enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
@@ -114,7 +114,10 @@ type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
   deleteUser(input: DeleteUserInput!): DeleteUserPayloadResult!
-}`);
+}`;
+    expect(output.trim()).toBe(expectedContent);
+    const schema = execSync('cat ./tmp/schema.graphql').toString();
+    expect(schema.trim()).toBe(expectedContent);
   });
 
   it('should output error message without input path', () => {
