@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prettier": "prettier --write '**/*'",
+    "prettier": "prettier --write '**/*' --loglevel warn",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix",
     "fmt": "npm run prettier && npm run lint-fix",
