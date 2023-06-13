@@ -9,14 +9,14 @@ const program = new Command();
 program
   .name('GraphQL Generator')
   .argument('<inputPath>', 'Path to domain entities dir.')
-  .option(`-o, --output <outputPath>`, 'Path to schema.graphql.')
+  .option(`-o, --outputPath <outputPath>`, 'Path to schema.graphql.')
   .description('Generate GraphQL schema from entity definitions')
-  .action(async (inputPath: string, options: { outputPath: string }) => {
+  .action(async (inputPath: string, options: { outputPath?: string }) => {
     const useCase = new GenerateGraphqlSchemaUseCase(
       new FsFileRepository(),
       new AstEntityDefinitionRepository(),
     );
-    const res = await useCase.run(inputPath, options.outputPath);
+    const res = await useCase.run(inputPath, options.outputPath ?? null);
     if (!options.outputPath) {
       console.log(res);
     }
