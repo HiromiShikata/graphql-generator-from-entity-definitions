@@ -5,7 +5,9 @@ First off, thank you for considering contributing to our project. We value all o
 ## Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
-- [Clean Architecture Rules](#clean-architecture-rules)
+- [Coding Guidelines](#coding-guidelines)
+  - [Clean Architecture Rules](#clean-architecture-rules)
+  - [Type-Safe Programming](#type-safe-programming)
 - [Writing Tests](#writing-tests)
 - [How to Submit Changes](#how-to-submit-changes)
 - [Recognition](#recognition)
@@ -20,9 +22,17 @@ We expect everyone participating in this project to adhere to our Code of Conduc
 - Keep criticism constructive and respectful.
 - Report any incidents of harassment or inappropriate behavior to the project maintainers.
 
-## Clean Architecture Rules
+## Coding Guidelines
 
-Our project follows the principles of Clean Architecture. This means that we separate concerns, make the project independent of any frameworks, and make it testable and independent of the UI. Please ensure that any contributions you make adhere to these principles.
+### Clean Architecture Rules
+
+Our project follows the principles of Clean Architecture. This means that we separate concerns, make the project independent of any frameworks, and make it testable and independent of the UI.
+
+In addition, our domain layer should not depend on the adapter layer. Please ensure that any contributions you make maintain this separation and adhere to these principles.
+
+### Type-Safe Programming
+
+We aim for a type-safe programming style, so please avoid using `any` or `as`. Instead, use type guards or other means to determine types.
 
 ## Writing Tests
 
@@ -39,6 +49,14 @@ Once you've identified a bug or an enhancement you'd like to work on, follow the
 5. Submit a pull request.
 
 Please note that we may take a while to respond, but we appreciate your patience. We aim to make the contribution process as transparent as possible and will keep you updated every step of the way.
+
+## Recognition
+
+We value all our contributors and would like to recognize the work you do. Here are some of the ways we recognize our contributors:
+
+- Listing top contributors in the project README.
+- Shoutouts in our community meetings.
+- Special badges for consistent contributors.
 
 ## Getting Help
 
