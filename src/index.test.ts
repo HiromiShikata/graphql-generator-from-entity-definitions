@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 
 describe('commander program', () => {
-  it('should output file contents', () => {
+  it('should output file contents', async () => {
     const output = execSync(
       'npx ts-node ./src/index.ts ./src/adapter/repositories/_testdata -o ./tmp/schema.graphql',
     ).toString();
@@ -129,27 +129,30 @@ type Mutation {
         !error ||
         typeof error !== 'object' ||
         !('stderr' in error) ||
-        !(error.stderr instanceof Buffer)
+        error.stderr === null ||
+        typeof error.stderr !== 'object'
       ) {
         throw error;
       }
-
       expect(error.stderr.toString()).toContain(
         `error: missing required argument 'inputPath'`,
       );
     }
   });
   it('should output help', () => {
-    const output = execSync('npx ts-node ./src/index.ts -h').toString();
+    const output = execSync('npx ts-node ./src/index.ts --help', {
+      encoding: 'utf8',
+      maxBuffer: 1024 * 1000,
+    });
     expect(output.trim()).toBe(`Usage: GraphQL Generator [options] <inputPath>
 
 Generate GraphQL schema from entity definitions
 
 Arguments:
-  inputPath                  Path to domain entities dir.
+  inputPath                      Path to domain entities dir.
 
 Options:
-  -o, --output <outputPath>  Path to schema.graphql.
-  -h, --help                 display help for command`);
+  -o, --outputPath <outputPath>  Path to schema.graphql.
+  -h, --help                     display help for command`);
   });
 });

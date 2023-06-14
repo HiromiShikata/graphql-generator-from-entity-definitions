@@ -17,8 +17,6 @@ program
       new AstEntityDefinitionRepository(),
     );
     const res = await useCase.run(inputPath, options.outputPath ?? null);
-    if (!options.outputPath) {
-      console.log(res);
-    }
+    console.log(res);
   });
 program.parse(process.argv);
