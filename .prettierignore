@@ -9,5 +9,7 @@ reports
 dist
 *.txt
 *.map
+*.log
 *.orig
 *.rej
+tmp
