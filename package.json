@@ -9,6 +9,7 @@
     "lint-fix": "eslint src --fix",
     "fmt": "npm run prettier && npm run lint-fix",
     "build": "tsc -p tsconfig.build.json",
+    "build-commit": "npm run build && git add bin && git commit -m'autogen: build' -m'npm run build'",
     "test": "jest"
   },
   "bin": {
