@@ -3,6 +3,8 @@ import { FileRepository } from '../../domain/usecases/adapter-interfaces/FileRep
 
 export class FsFileRepository implements FileRepository {
   async save(path: string, content: string): Promise<void> {
+    const dir = path.split('/').slice(0, -1).join('/');
+    await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path, content);
   }
 
