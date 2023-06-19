@@ -101,21 +101,42 @@ enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
+  USER_NOT_FOUND
+  GROUP_NOT_FOUND
+  USER_GROUP_NOT_FOUND
 }
 
-type UnknownRuntimeError {
+type ErrorUnknownRuntime {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type PermissionDeniedError {
+type ErrorPermissionDenied {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type NotFoundError {
+type ErrorNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorGroupNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserGroupNotFound {
   errorCode: ErrorCode!
   message: String
   stack: String
@@ -148,9 +169,10 @@ type UserGroup {
 
 union UserResult =
     User
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 type UserList {
   items: [User!]!
@@ -159,15 +181,16 @@ type UserList {
 
 union UserListResult =
     UserList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 union GroupResult =
     Group
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorGroupNotFound
 
 type GroupList {
   items: [Group!]!
@@ -176,15 +199,16 @@ type GroupList {
 
 union GroupListResult =
     GroupList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 union UserGroupResult =
     UserGroup
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserGroupNotFound
 
 type UserGroupList {
   items: [UserGroup!]!
@@ -193,9 +217,9 @@ type UserGroupList {
 
 union UserGroupListResult =
     UserGroupList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 type Query {
   user(id: ID!): UserResult!
@@ -220,8 +244,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -238,9 +263,10 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 input DeleteUserInput {
   id: ID!
@@ -254,9 +280,10 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 input CreateGroupInput {
   name: String!
@@ -270,8 +297,9 @@ type CreateGroupPayload {
 
 union CreateGroupPayloadResult =
     CreateGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -286,9 +314,10 @@ type UpdateGroupPayload {
 
 union UpdateGroupPayloadResult =
     UpdateGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorGroupNotFound
 
 input DeleteGroupInput {
   id: ID!
@@ -302,9 +331,10 @@ type DeleteGroupPayload {
 
 union DeleteGroupPayloadResult =
     DeleteGroupPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorGroupNotFound
 
 input CreateUserGroupInput {
   userId: String!
@@ -319,9 +349,11 @@ type CreateUserGroupPayload {
 
 union CreateUserGroupPayloadResult =
     CreateUserGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 input UpdateUserGroupInput {
   id: ID!
@@ -337,9 +369,12 @@ type UpdateUserGroupPayload {
 
 union UpdateUserGroupPayloadResult =
     UpdateUserGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
+  | ErrorUserGroupNotFound
 
 input DeleteUserGroupInput {
   id: ID!
@@ -353,9 +388,10 @@ type DeleteUserGroupPayload {
 
 union DeleteUserGroupPayloadResult =
     DeleteUserGroupPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserGroupNotFound
 
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
@@ -403,8 +439,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -421,9 +458,10 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 input DeleteUserInput {
   id: ID!
@@ -437,9 +475,10 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 input CreateGroupInput {
   name: String!
@@ -453,8 +492,9 @@ type CreateGroupPayload {
 
 union CreateGroupPayloadResult =
     CreateGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -469,9 +509,10 @@ type UpdateGroupPayload {
 
 union UpdateGroupPayloadResult =
     UpdateGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorGroupNotFound
 
 input DeleteGroupInput {
   id: ID!
@@ -485,9 +526,10 @@ type DeleteGroupPayload {
 
 union DeleteGroupPayloadResult =
     DeleteGroupPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorGroupNotFound
 
 input CreateUserGroupInput {
   userId: String!
@@ -502,9 +544,11 @@ type CreateUserGroupPayload {
 
 union CreateUserGroupPayloadResult =
     CreateUserGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 input UpdateUserGroupInput {
   id: ID!
@@ -520,9 +564,12 @@ type UpdateUserGroupPayload {
 
 union UpdateUserGroupPayloadResult =
     UpdateUserGroupPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
+  | ErrorUserGroupNotFound
 
 input DeleteUserGroupInput {
   id: ID!
@@ -536,9 +583,10 @@ type DeleteUserGroupPayload {
 
 union DeleteUserGroupPayloadResult =
     DeleteUserGroupPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserGroupNotFound
 
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
@@ -603,21 +651,42 @@ enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
+  USER_NOT_FOUND
+  GROUP_NOT_FOUND
+  USER_GROUP_NOT_FOUND
 }
 
-type UnknownRuntimeError {
+type ErrorUnknownRuntime {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type PermissionDeniedError {
+type ErrorPermissionDenied {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type NotFoundError {
+type ErrorNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorGroupNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserGroupNotFound {
   errorCode: ErrorCode!
   message: String
   stack: String
@@ -625,7 +694,7 @@ type NotFoundError {
 
 `;
 
-      const typeDefs = useCase.generateErrorTypes();
+      const typeDefs = useCase.generateErrorTypes(entityDefinitions);
 
       expect(typeDefs.trim()).toEqual(expectedTypeDefs.trim());
     });
@@ -637,9 +706,10 @@ type NotFoundError {
       const expectedQueryDefs = `
 union UserResult =
     User
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 type UserList {
   items: [User!]!
@@ -648,15 +718,16 @@ type UserList {
 
 union UserListResult =
     UserList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 union GroupResult =
     Group
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorGroupNotFound
 
 type GroupList {
   items: [Group!]!
@@ -665,15 +736,16 @@ type GroupList {
 
 union GroupListResult =
     GroupList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 union UserGroupResult =
     UserGroup
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserGroupNotFound
 
 type UserGroupList {
   items: [UserGroup!]!
@@ -682,9 +754,9 @@ type UserGroupList {
 
 union UserGroupListResult =
     UserGroupList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 type Query {
   user(id: ID!): UserResult!
@@ -777,6 +849,20 @@ type Query {
         'PermissionDenied',
       );
     });
+  });
+  describe(`pascalCaseToScreamingSnakeCase`, () => {
+    test.each`
+      input                 | expected
+      ${'PermissionDenied'} | ${'PERMISSION_DENIED'}
+      ${'SomeOtherValue'}   | ${'SOME_OTHER_VALUE'}
+      ${'YetAnotherName'}   | ${'YET_ANOTHER_NAME'}
+    `(
+      'should convert $input to $expected',
+      ({ input, expected }: { input: string; expected: string }) => {
+        const { useCase } = createUseCaseAndMockRepositories();
+        expect(useCase.pascalCaseToScreamingSnakeCase(input)).toBe(expected);
+      },
+    );
   });
 
   const createUseCaseAndMockRepositories = () => {

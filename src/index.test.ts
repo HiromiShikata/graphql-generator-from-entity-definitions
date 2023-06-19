@@ -9,21 +9,28 @@ describe('commander program', () => {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
+  USER_NOT_FOUND
 }
 
-type UnknownRuntimeError {
+type ErrorUnknownRuntime {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type PermissionDeniedError {
+type ErrorPermissionDenied {
   errorCode: ErrorCode!
   message: String
   stack: String
 }
 
-type NotFoundError {
+type ErrorNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserNotFound {
   errorCode: ErrorCode!
   message: String
   stack: String
@@ -40,9 +47,10 @@ type User {
 
 union UserResult =
     User
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 type UserList {
   items: [User!]!
@@ -51,9 +59,9 @@ type UserList {
 
 union UserListResult =
     UserList
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 
 type Query {
   user(id: ID!): UserResult!
@@ -73,8 +81,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -90,9 +99,10 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 input DeleteUserInput {
   id: ID!
@@ -106,9 +116,10 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserNotFound
 
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!

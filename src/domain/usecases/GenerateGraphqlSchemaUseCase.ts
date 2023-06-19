@@ -21,7 +21,7 @@ export class GenerateGraphqlSchemaUseCase {
     const entityDefinitions: EntityDefinition[] =
       await this.entityDefinitionRepository.find(domainEntitiesDirectoryPath);
 
-    const schema = `${this.generateErrorTypes()}
+    const schema = `${this.generateErrorTypes(entityDefinitions)}
 ${this.generateTypes(entityDefinitions)}
 ${this.generateQuery(entityDefinitions)}
 ${this.generateMutation(entityDefinitions)}
@@ -103,9 +103,10 @@ ${properties.join('\n')}${
     for (const entity of entityDefinitions) {
       const resultType = `union ${entity.name}Result =
     ${entity.name}
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | Error${entity.name}NotFound
 
 type ${entity.name}List {
   items: [${entity.name}!]!
@@ -114,9 +115,9 @@ type ${entity.name}List {
 
 union ${entity.name}ListResult =
     ${entity.name}List
-  | NotFoundError
-  | PermissionDeniedError
-  | UnknownRuntimeError
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
 `;
       resultTypes.push(resultType);
     }
@@ -146,11 +147,17 @@ ${queryMethods.join('\n')}
 `;
     return query;
   };
-  generateErrorTypes = (): string => {
-    const errors = ERROR_TYPES;
+  generateErrorTypes = (entityDefinitions: EntityDefinition[]): string => {
+    const errors = [
+      ...ERROR_TYPES,
+      ...entityDefinitions.map(
+        (entity) =>
+          `${this.pascalCaseToScreamingSnakeCase(entity.name)}_NOT_FOUND`,
+      ),
+    ];
     const errorTypes: string[] = [];
-    for (const error of ERROR_TYPES) {
-      errorTypes.push(`type ${this.snakeCaseToPascalCase(error)}Error {
+    for (const error of errors) {
+      errorTypes.push(`type Error${this.snakeCaseToPascalCase(error)} {
   errorCode: ErrorCode!
   message: String
   stack: String
@@ -180,11 +187,12 @@ ${errorTypes.join('\n')}`;
               )}` + (property.isNullable ? '' : '!'),
         )
         .join('\n');
-      const notFoundError = entity.properties.some(
-        (property) => property.isReference,
-      )
-        ? '\n  | NotFoundError'
-        : '';
+      const notFoundError = entity.properties
+        .filter(
+          (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
+        )
+        .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
+        .join('');
 
       const mutationType = `input Create${entity.name}Input {
 ${properties}
@@ -198,8 +206,9 @@ type Create${entity.name}Payload {
 
 union Create${entity.name}PayloadResult =
     Create${entity.name}Payload
-  | PermissionDeniedError
-  | UnknownRuntimeError${notFoundError}
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound${notFoundError}
 
 input Update${entity.name}Input {
   id: ID!
@@ -214,9 +223,10 @@ type Update${entity.name}Payload {
 
 union Update${entity.name}PayloadResult =
     Update${entity.name}Payload
-  | PermissionDeniedError
-  | UnknownRuntimeError
-  | NotFoundError
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound${notFoundError}
+  | Error${entity.name}NotFound
 
 input Delete${entity.name}Input {
   id: ID!
@@ -230,9 +240,10 @@ type Delete${entity.name}Payload {
 
 union Delete${entity.name}PayloadResult =
     Delete${entity.name}Payload
-  | UnknownRuntimeError
-  | PermissionDeniedError
-  | NotFoundError
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | Error${entity.name}NotFound
 `;
       mutationTypes.push(mutationType);
     }
@@ -280,5 +291,11 @@ ${mutations.join('\n')}
       .toLowerCase()
       .replace(/_(\w)/g, (_, letter: string) => letter.toUpperCase())
       .replace(/^\w/, (letter) => letter.toUpperCase());
+  };
+  pascalCaseToScreamingSnakeCase = (str: string): string => {
+    return str
+      .replace(/([A-Z])/g, '_$1')
+      .toUpperCase()
+      .replace(/^_/, '');
   };
 }
