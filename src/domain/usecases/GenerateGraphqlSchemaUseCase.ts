@@ -70,7 +70,7 @@ ${this.generateMutation(entityDefinitions)}
             relatedProperty.isUnique
               ? `  ${this.uncapitalize(relatedEntity.name)}: ${
                   relatedEntity.name
-                }!`
+                }`
               : `  ${this.uncapitalize(relatedEntity.name)}List: [${
                   relatedEntity.name
                 }ListResult!]!`,
@@ -164,8 +164,7 @@ ${queryMethods.join('\n')}
 }
 `);
     }
-    return `
-enum ErrorCode {
+    return `enum ErrorCode {
 ${errors.map((error) => `  ${error}`).join(`\n`)}
 }
 

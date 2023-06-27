@@ -57,7 +57,6 @@ const entityDefinitions: EntityDefinition[] = [
       },
     ],
   },
-
   {
     name: 'UserGroup',
     properties: [
@@ -84,6 +83,32 @@ const entityDefinitions: EntityDefinition[] = [
       },
     ],
   },
+  {
+    name: 'UserProfile',
+    properties: [
+      {
+        name: 'id',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'userId',
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: true,
+        isNullable: false,
+      },
+      {
+        name: 'nickname',
+        isReference: false,
+        propertyType: 'string',
+        isNullable: false,
+        acceptableValues: null,
+      },
+    ],
+  },
 ];
 
 describe('GenerateGraphqlSchemaUseCase', () => {
@@ -96,14 +121,14 @@ describe('GenerateGraphqlSchemaUseCase', () => {
       const domainEntitiesDirectoryPath = '/path/to/domain/entities';
       const outputGraphqlSchemaPath = '/path/to/output/schema.graphql';
 
-      const expectedSchema = `
-enum ErrorCode {
+      const expectedSchema = `enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
   USER_NOT_FOUND
   GROUP_NOT_FOUND
   USER_GROUP_NOT_FOUND
+  USER_PROFILE_NOT_FOUND
 }
 
 type ErrorUnknownRuntime {
@@ -142,6 +167,12 @@ type ErrorUserGroupNotFound {
   stack: String
 }
 
+type ErrorUserProfileNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 scalar Date
 
 type User {
@@ -150,6 +181,7 @@ type User {
   pet: String
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
+  userProfile: UserProfile
 }
 
 type Group {
@@ -164,6 +196,13 @@ type UserGroup {
   user: UserResult!
   groupId: String!
   group: GroupResult!
+}
+
+type UserProfile {
+  id: ID!
+  userId: String!
+  user: UserResult!
+  nickname: String!
 }
 
 
@@ -221,6 +260,24 @@ union UserGroupListResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
 
+union UserProfileResult =
+    UserProfile
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserProfileNotFound
+
+type UserProfileList {
+  items: [UserProfile!]!
+  total: Int!
+}
+
+union UserProfileListResult =
+    UserProfileList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
 type Query {
   user(id: ID!): UserResult!
   userList: UserListResult!
@@ -228,6 +285,8 @@ type Query {
   groupList: GroupListResult!
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: String, groupId: String): UserGroupListResult!
+  userProfile(id: ID!): UserProfileResult!
+  userProfileList(userId: String): UserProfileListResult!
 }
 
 input CreateUserInput {
@@ -393,6 +452,61 @@ union DeleteUserGroupPayloadResult =
   | ErrorNotFound
   | ErrorUserGroupNotFound
 
+input CreateUserProfileInput {
+  userId: String!
+  nickname: String!
+  clientMutationId: String
+}
+
+type CreateUserProfilePayload {
+  userProfile: UserProfile!
+  clientMutationId: String
+}
+
+union CreateUserProfilePayloadResult =
+    CreateUserProfilePayload
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+
+input UpdateUserProfileInput {
+  id: ID!
+  userId: String!
+  nickname: String!
+  clientMutationId: String
+}
+
+type UpdateUserProfilePayload {
+  userProfile: UserProfile!
+  clientMutationId: String
+}
+
+union UpdateUserProfilePayloadResult =
+    UpdateUserProfilePayload
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorUserProfileNotFound
+
+input DeleteUserProfileInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type DeleteUserProfilePayload {
+  id: ID!
+  clientMutationId: String
+}
+
+union DeleteUserProfilePayloadResult =
+    DeleteUserProfilePayload
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserProfileNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -403,6 +517,9 @@ type Mutation {
   createUserGroup(input: CreateUserGroupInput!): CreateUserGroupPayloadResult!
   updateUserGroup(input: UpdateUserGroupInput!): UpdateUserGroupPayloadResult!
   deleteUserGroup(input: DeleteUserGroupInput!): DeleteUserGroupPayloadResult!
+  createUserProfile(input: CreateUserProfileInput!): CreateUserProfilePayloadResult!
+  updateUserProfile(input: UpdateUserProfileInput!): UpdateUserProfilePayloadResult!
+  deleteUserProfile(input: DeleteUserProfileInput!): DeleteUserProfilePayloadResult!
 }
 `;
       const response = await useCase.run(
@@ -588,6 +705,61 @@ union DeleteUserGroupPayloadResult =
   | ErrorNotFound
   | ErrorUserGroupNotFound
 
+input CreateUserProfileInput {
+  userId: String!
+  nickname: String!
+  clientMutationId: String
+}
+
+type CreateUserProfilePayload {
+  userProfile: UserProfile!
+  clientMutationId: String
+}
+
+union CreateUserProfilePayloadResult =
+    CreateUserProfilePayload
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+
+input UpdateUserProfileInput {
+  id: ID!
+  userId: String!
+  nickname: String!
+  clientMutationId: String
+}
+
+type UpdateUserProfilePayload {
+  userProfile: UserProfile!
+  clientMutationId: String
+}
+
+union UpdateUserProfilePayloadResult =
+    UpdateUserProfilePayload
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorNotFound
+  | ErrorUserNotFound
+  | ErrorUserProfileNotFound
+
+input DeleteUserProfileInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type DeleteUserProfilePayload {
+  id: ID!
+  clientMutationId: String
+}
+
+union DeleteUserProfilePayloadResult =
+    DeleteUserProfilePayload
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorNotFound
+  | ErrorUserProfileNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -598,7 +770,10 @@ type Mutation {
   createUserGroup(input: CreateUserGroupInput!): CreateUserGroupPayloadResult!
   updateUserGroup(input: UpdateUserGroupInput!): UpdateUserGroupPayloadResult!
   deleteUserGroup(input: DeleteUserGroupInput!): DeleteUserGroupPayloadResult!
-}
+  createUserProfile(input: CreateUserProfileInput!): CreateUserProfilePayloadResult!
+  updateUserProfile(input: UpdateUserProfileInput!): UpdateUserProfilePayloadResult!
+  deleteUserProfile(input: DeleteUserProfileInput!): DeleteUserProfilePayloadResult!
+}      
 `;
 
       const mutation = useCase.generateMutation(entityDefinitions);
@@ -619,6 +794,7 @@ type User {
   pet: String
   deactivated: Boolean!
   userGroupList: [UserGroupListResult!]!
+  userProfile: UserProfile
 }
 
 type Group {
@@ -635,6 +811,12 @@ type UserGroup {
   group: GroupResult!
 }
 
+type UserProfile {
+  id: ID!
+  userId: String!
+  user: UserResult!
+  nickname: String!
+}
 `;
 
       const typeDefs = useCase.generateTypes(entityDefinitions);
@@ -654,6 +836,7 @@ enum ErrorCode {
   USER_NOT_FOUND
   GROUP_NOT_FOUND
   USER_GROUP_NOT_FOUND
+  USER_PROFILE_NOT_FOUND
 }
 
 type ErrorUnknownRuntime {
@@ -687,6 +870,12 @@ type ErrorGroupNotFound {
 }
 
 type ErrorUserGroupNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserProfileNotFound {
   errorCode: ErrorCode!
   message: String
   stack: String
@@ -758,6 +947,24 @@ union UserGroupListResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
 
+union UserProfileResult =
+    UserProfile
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserProfileNotFound
+
+type UserProfileList {
+  items: [UserProfile!]!
+  total: Int!
+}
+
+union UserProfileListResult =
+    UserProfileList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
 type Query {
   user(id: ID!): UserResult!
   userList: UserListResult!
@@ -765,7 +972,9 @@ type Query {
   groupList: GroupListResult!
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: String, groupId: String): UserGroupListResult!
-} 
+  userProfile(id: ID!): UserProfileResult!
+  userProfileList(userId: String): UserProfileListResult!
+}
 `;
 
       const queryDefs = useCase.generateQuery(entityDefinitions);
