@@ -106,7 +106,12 @@ ${properties.join('\n')}${
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | Error${entity.name}NotFound
+  | Error${entity.name}NotFound${entity.properties
+        .filter(
+          (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
+        )
+        .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
+        .join('')}
 
 type ${entity.name}List {
   items: [${entity.name}!]!
@@ -117,7 +122,10 @@ union ${entity.name}ListResult =
     ${entity.name}List
   | ErrorNotFound
   | ErrorPermissionDenied
-  | ErrorUnknownRuntime
+  | ErrorUnknownRuntime${entity.properties
+    .filter((p): p is EntityPropertyDefinitionReferencedObject => p.isReference)
+    .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
+    .join('')}
 `;
       resultTypes.push(resultType);
     }
@@ -205,9 +213,9 @@ type Create${entity.name}Payload {
 
 union Create${entity.name}PayloadResult =
     Create${entity.name}Payload
+  | ErrorNotFound
   | ErrorPermissionDenied
-  | ErrorUnknownRuntime
-  | ErrorNotFound${notFoundError}
+  | ErrorUnknownRuntime${notFoundError}
 
 input Update${entity.name}Input {
   id: ID!
@@ -222,10 +230,10 @@ type Update${entity.name}Payload {
 
 union Update${entity.name}PayloadResult =
     Update${entity.name}Payload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound${notFoundError}
-  | Error${entity.name}NotFound
+  | Error${entity.name}NotFound${notFoundError}
 
 input Delete${entity.name}Input {
   id: ID!
@@ -239,9 +247,9 @@ type Delete${entity.name}Payload {
 
 union Delete${entity.name}PayloadResult =
     Delete${entity.name}Payload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | Error${entity.name}NotFound
 `;
       mutationTypes.push(mutationType);

@@ -81,9 +81,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -99,9 +99,9 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input DeleteUserInput {
@@ -116,9 +116,9 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserNotFound
 
 type Mutation {
