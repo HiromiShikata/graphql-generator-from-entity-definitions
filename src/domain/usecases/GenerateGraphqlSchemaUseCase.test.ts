@@ -248,6 +248,8 @@ union UserGroupResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorUserGroupNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 type UserGroupList {
   items: [UserGroup!]!
@@ -259,6 +261,8 @@ union UserGroupListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 union UserProfileResult =
     UserProfile
@@ -266,6 +270,7 @@ union UserProfileResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorUserProfileNotFound
+  | ErrorUserNotFound
 
 type UserProfileList {
   items: [UserProfile!]!
@@ -277,6 +282,7 @@ union UserProfileListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 type Query {
   user(id: ID!): UserResult!
@@ -303,9 +309,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -322,9 +328,9 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input DeleteUserInput {
@@ -339,9 +345,9 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input CreateGroupInput {
@@ -356,9 +362,9 @@ type CreateGroupPayload {
 
 union CreateGroupPayloadResult =
     CreateGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -373,9 +379,9 @@ type UpdateGroupPayload {
 
 union UpdateGroupPayloadResult =
     UpdateGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorGroupNotFound
 
 input DeleteGroupInput {
@@ -390,9 +396,9 @@ type DeleteGroupPayload {
 
 union DeleteGroupPayloadResult =
     DeleteGroupPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorGroupNotFound
 
 input CreateUserGroupInput {
@@ -408,9 +414,9 @@ type CreateUserGroupPayload {
 
 union CreateUserGroupPayloadResult =
     CreateUserGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
   | ErrorGroupNotFound
 
@@ -428,12 +434,12 @@ type UpdateUserGroupPayload {
 
 union UpdateUserGroupPayloadResult =
     UpdateUserGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
+  | ErrorUserGroupNotFound
   | ErrorUserNotFound
   | ErrorGroupNotFound
-  | ErrorUserGroupNotFound
 
 input DeleteUserGroupInput {
   id: ID!
@@ -447,9 +453,9 @@ type DeleteUserGroupPayload {
 
 union DeleteUserGroupPayloadResult =
     DeleteUserGroupPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserGroupNotFound
 
 input CreateUserProfileInput {
@@ -465,9 +471,9 @@ type CreateUserProfilePayload {
 
 union CreateUserProfilePayloadResult =
     CreateUserProfilePayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input UpdateUserProfileInput {
@@ -484,11 +490,11 @@ type UpdateUserProfilePayload {
 
 union UpdateUserProfilePayloadResult =
     UpdateUserProfilePayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
-  | ErrorUserNotFound
   | ErrorUserProfileNotFound
+  | ErrorUserNotFound
 
 input DeleteUserProfileInput {
   id: ID!
@@ -502,9 +508,9 @@ type DeleteUserProfilePayload {
 
 union DeleteUserProfilePayloadResult =
     DeleteUserProfilePayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserProfileNotFound
 
 type Mutation {
@@ -556,9 +562,9 @@ type CreateUserPayload {
 
 union CreateUserPayloadResult =
     CreateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -575,9 +581,9 @@ type UpdateUserPayload {
 
 union UpdateUserPayloadResult =
     UpdateUserPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input DeleteUserInput {
@@ -592,9 +598,9 @@ type DeleteUserPayload {
 
 union DeleteUserPayloadResult =
     DeleteUserPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input CreateGroupInput {
@@ -609,9 +615,9 @@ type CreateGroupPayload {
 
 union CreateGroupPayloadResult =
     CreateGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -626,9 +632,9 @@ type UpdateGroupPayload {
 
 union UpdateGroupPayloadResult =
     UpdateGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorGroupNotFound
 
 input DeleteGroupInput {
@@ -643,9 +649,9 @@ type DeleteGroupPayload {
 
 union DeleteGroupPayloadResult =
     DeleteGroupPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorGroupNotFound
 
 input CreateUserGroupInput {
@@ -661,9 +667,9 @@ type CreateUserGroupPayload {
 
 union CreateUserGroupPayloadResult =
     CreateUserGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
   | ErrorGroupNotFound
 
@@ -681,12 +687,12 @@ type UpdateUserGroupPayload {
 
 union UpdateUserGroupPayloadResult =
     UpdateUserGroupPayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
+  | ErrorUserGroupNotFound
   | ErrorUserNotFound
   | ErrorGroupNotFound
-  | ErrorUserGroupNotFound
 
 input DeleteUserGroupInput {
   id: ID!
@@ -700,9 +706,9 @@ type DeleteUserGroupPayload {
 
 union DeleteUserGroupPayloadResult =
     DeleteUserGroupPayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserGroupNotFound
 
 input CreateUserProfileInput {
@@ -718,9 +724,9 @@ type CreateUserProfilePayload {
 
 union CreateUserProfilePayloadResult =
     CreateUserProfilePayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
   | ErrorUserNotFound
 
 input UpdateUserProfileInput {
@@ -737,11 +743,11 @@ type UpdateUserProfilePayload {
 
 union UpdateUserProfilePayloadResult =
     UpdateUserProfilePayload
+  | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | ErrorNotFound
-  | ErrorUserNotFound
   | ErrorUserProfileNotFound
+  | ErrorUserNotFound
 
 input DeleteUserProfileInput {
   id: ID!
@@ -755,9 +761,9 @@ type DeleteUserProfilePayload {
 
 union DeleteUserProfilePayloadResult =
     DeleteUserProfilePayload
+  | ErrorNotFound
   | ErrorUnknownRuntime
   | ErrorPermissionDenied
-  | ErrorNotFound
   | ErrorUserProfileNotFound
 
 type Mutation {
@@ -773,7 +779,7 @@ type Mutation {
   createUserProfile(input: CreateUserProfileInput!): CreateUserProfilePayloadResult!
   updateUserProfile(input: UpdateUserProfileInput!): UpdateUserProfilePayloadResult!
   deleteUserProfile(input: DeleteUserProfileInput!): DeleteUserProfilePayloadResult!
-}      
+}
 `;
 
       const mutation = useCase.generateMutation(entityDefinitions);
@@ -892,8 +898,7 @@ type ErrorUserProfileNotFound {
     it('should generate query definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedQueryDefs = `
-union UserResult =
+      const expectedQueryDefs = `union UserResult =
     User
   | ErrorNotFound
   | ErrorPermissionDenied
@@ -935,6 +940,8 @@ union UserGroupResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorUserGroupNotFound
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 type UserGroupList {
   items: [UserGroup!]!
@@ -946,6 +953,8 @@ union UserGroupListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorGroupNotFound
 
 union UserProfileResult =
     UserProfile
@@ -953,6 +962,7 @@ union UserProfileResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorUserProfileNotFound
+  | ErrorUserNotFound
 
 type UserProfileList {
   items: [UserProfile!]!
@@ -964,6 +974,7 @@ union UserProfileListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 type Query {
   user(id: ID!): UserResult!
