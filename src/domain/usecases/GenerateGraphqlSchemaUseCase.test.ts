@@ -299,12 +299,12 @@ input CreateUserInput {
   name: String!
   pet: String
   deactivated: Boolean!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserPayloadResult =
@@ -318,12 +318,12 @@ input UpdateUserInput {
   name: String!
   pet: String
   deactivated: Boolean!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserPayloadResult =
@@ -335,12 +335,12 @@ union UpdateUserPayloadResult =
 
 input DeleteUserInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserPayloadResult =
@@ -352,12 +352,12 @@ union DeleteUserPayloadResult =
 
 input CreateGroupInput {
   name: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateGroupPayload {
   group: Group!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateGroupPayloadResult =
@@ -369,12 +369,12 @@ union CreateGroupPayloadResult =
 input UpdateGroupInput {
   id: ID!
   name: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateGroupPayload {
   group: Group!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateGroupPayloadResult =
@@ -386,12 +386,12 @@ union UpdateGroupPayloadResult =
 
 input DeleteGroupInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteGroupPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteGroupPayloadResult =
@@ -404,12 +404,12 @@ union DeleteGroupPayloadResult =
 input CreateUserGroupInput {
   userId: String!
   groupId: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserGroupPayload {
   userGroup: UserGroup!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserGroupPayloadResult =
@@ -424,12 +424,12 @@ input UpdateUserGroupInput {
   id: ID!
   userId: String!
   groupId: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserGroupPayload {
   userGroup: UserGroup!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserGroupPayloadResult =
@@ -443,12 +443,12 @@ union UpdateUserGroupPayloadResult =
 
 input DeleteUserGroupInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserGroupPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserGroupPayloadResult =
@@ -461,12 +461,12 @@ union DeleteUserGroupPayloadResult =
 input CreateUserProfileInput {
   userId: String!
   nickname: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserProfilePayload {
   userProfile: UserProfile!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserProfilePayloadResult =
@@ -480,12 +480,12 @@ input UpdateUserProfileInput {
   id: ID!
   userId: String!
   nickname: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserProfilePayload {
   userProfile: UserProfile!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserProfilePayloadResult =
@@ -498,12 +498,12 @@ union UpdateUserProfilePayloadResult =
 
 input DeleteUserProfileInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserProfilePayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserProfilePayloadResult =
@@ -552,12 +552,12 @@ input CreateUserInput {
   name: String!
   pet: String
   deactivated: Boolean!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserPayloadResult =
@@ -571,12 +571,12 @@ input UpdateUserInput {
   name: String!
   pet: String
   deactivated: Boolean!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserPayloadResult =
@@ -588,12 +588,12 @@ union UpdateUserPayloadResult =
 
 input DeleteUserInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserPayloadResult =
@@ -605,12 +605,12 @@ union DeleteUserPayloadResult =
 
 input CreateGroupInput {
   name: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateGroupPayload {
   group: Group!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateGroupPayloadResult =
@@ -622,12 +622,12 @@ union CreateGroupPayloadResult =
 input UpdateGroupInput {
   id: ID!
   name: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateGroupPayload {
   group: Group!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateGroupPayloadResult =
@@ -639,12 +639,12 @@ union UpdateGroupPayloadResult =
 
 input DeleteGroupInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteGroupPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteGroupPayloadResult =
@@ -657,12 +657,12 @@ union DeleteGroupPayloadResult =
 input CreateUserGroupInput {
   userId: String!
   groupId: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserGroupPayload {
   userGroup: UserGroup!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserGroupPayloadResult =
@@ -677,12 +677,12 @@ input UpdateUserGroupInput {
   id: ID!
   userId: String!
   groupId: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserGroupPayload {
   userGroup: UserGroup!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserGroupPayloadResult =
@@ -696,12 +696,12 @@ union UpdateUserGroupPayloadResult =
 
 input DeleteUserGroupInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserGroupPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserGroupPayloadResult =
@@ -714,12 +714,12 @@ union DeleteUserGroupPayloadResult =
 input CreateUserProfileInput {
   userId: String!
   nickname: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserProfilePayload {
   userProfile: UserProfile!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserProfilePayloadResult =
@@ -733,12 +733,12 @@ input UpdateUserProfileInput {
   id: ID!
   userId: String!
   nickname: String!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserProfilePayload {
   userProfile: UserProfile!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserProfilePayloadResult =
@@ -751,12 +751,12 @@ union UpdateUserProfilePayloadResult =
 
 input DeleteUserProfileInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserProfilePayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserProfilePayloadResult =

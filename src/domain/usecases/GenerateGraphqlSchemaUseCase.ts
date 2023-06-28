@@ -203,12 +203,12 @@ ${errorTypes.join('\n')}`;
 
       const mutationType = `input Create${entity.name}Input {
 ${properties}
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type Create${entity.name}Payload {
   ${uncapitalizedEntityName}: ${entity.name}!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union Create${entity.name}PayloadResult =
@@ -220,12 +220,12 @@ union Create${entity.name}PayloadResult =
 input Update${entity.name}Input {
   id: ID!
 ${properties}
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type Update${entity.name}Payload {
   ${uncapitalizedEntityName}: ${entity.name}!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union Update${entity.name}PayloadResult =
@@ -237,12 +237,12 @@ union Update${entity.name}PayloadResult =
 
 input Delete${entity.name}Input {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type Delete${entity.name}Payload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union Delete${entity.name}PayloadResult =
