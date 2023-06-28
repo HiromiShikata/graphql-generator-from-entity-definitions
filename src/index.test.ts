@@ -71,12 +71,12 @@ type Query {
 input CreateUserInput {
   name: String!
   pet: String
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type CreateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union CreateUserPayloadResult =
@@ -89,12 +89,12 @@ input UpdateUserInput {
   id: ID!
   name: String!
   pet: String
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type UpdateUserPayload {
   user: User!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union UpdateUserPayloadResult =
@@ -106,12 +106,12 @@ union UpdateUserPayloadResult =
 
 input DeleteUserInput {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 type DeleteUserPayload {
   id: ID!
-  clientMutationId: String
+  clientMutationId: ID
 }
 
 union DeleteUserPayloadResult =
