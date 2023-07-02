@@ -3,6 +3,8 @@ import { GenerateGraphqlSchemaUseCase } from './GenerateGraphqlSchemaUseCase';
 import { FileRepository } from './adapter-interfaces/FileRepository';
 import { EntityDefinitionRepository } from './adapter-interfaces/EntityRelationDefinitionRepository';
 import { EntityDefinition } from '../entities/EntityDefinition';
+import { camelCase, paramCase, pascalCase, snakeCase } from 'change-case-all';
+import { StringConvertor } from './adapter-interfaces/StringConvertor';
 
 const ignorePropertyNamesForCreation: string[] = [
   'id',
@@ -34,6 +36,13 @@ const entityDefinitions: EntityDefinition[] = [
         isReference: false,
         isNullable: false,
         acceptableValues: null,
+      },
+      {
+        name: 'gender',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: ['Male', 'Female', 'Other'],
       },
       {
         name: 'pet',
@@ -219,6 +228,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   createdAt: Date!
@@ -228,7 +238,11 @@ type User {
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
-
+enum UserGenderType {
+  MALE
+  FEMALE
+  OTHER
+}
 type Group {
   id: ID!
   name: String!
@@ -342,6 +356,7 @@ type Query {
 
 input CreateUserInput {
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -361,6 +376,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -597,6 +613,7 @@ type Mutation {
       const expectedMutation = `
 input CreateUserInput {
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -616,6 +633,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -842,12 +860,12 @@ type Mutation {
     it('should generate type definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedTypeDefs = `
-scalar Date
+      const expectedTypeDefs = `scalar Date
 
 type User {
   id: ID!
   name: String!
+  gender: String!
   pet: String
   deactivated: Boolean!
   createdAt: Date!
@@ -857,7 +875,11 @@ type User {
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
-
+enum UserGenderType {
+  MALE
+  FEMALE
+  OTHER
+}
 type Group {
   id: ID!
   name: String!
@@ -1144,9 +1166,11 @@ type Query {
     const fileRepository = createMockFileRepository();
     const entityDefinitionRepository =
       createMockEntityRelationDefinitionRepository();
+    const stringConvertor = createMockStringConvertor();
     const useCase = new GenerateGraphqlSchemaUseCase(
       fileRepository,
       entityDefinitionRepository,
+      stringConvertor,
     );
     return {
       fileRepository,
@@ -1174,6 +1198,26 @@ type Query {
     };
     return {
       find: jest.fn((path: string) => repository.find(path)),
+    };
+  };
+  const createMockStringConvertor = () => {
+    const stringConvertor: StringConvertor = {
+      camelCase: (str: string): string => camelCase(str),
+      snakeCase: (str: string): string => snakeCase(str),
+      pascalCase: (str: string): string => pascalCase(str),
+      paramCase: (str: string): string => paramCase(str),
+      kebabCase: (str: string): string => paramCase(str),
+      screamSnakeCase: (str: string): string => snakeCase(str).toUpperCase(),
+    };
+    return {
+      camelCase: jest.fn((str: string) => stringConvertor.camelCase(str)),
+      snakeCase: jest.fn((str: string) => stringConvertor.snakeCase(str)),
+      pascalCase: jest.fn((str: string) => stringConvertor.pascalCase(str)),
+      paramCase: jest.fn((str: string) => stringConvertor.paramCase(str)),
+      kebabCase: jest.fn((str: string) => stringConvertor.kebabCase(str)),
+      screamSnakeCase: jest.fn((str: string) =>
+        stringConvertor.screamSnakeCase(str),
+      ),
     };
   };
 });

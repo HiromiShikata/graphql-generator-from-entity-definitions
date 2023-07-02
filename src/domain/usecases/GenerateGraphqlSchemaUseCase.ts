@@ -7,12 +7,14 @@ import {
   EntityPropertyDefinitionReferencedObject,
 } from '../entities/EntityPropertyDefinition';
 import { EntityPropertyDefinition } from 'ast-to-entity-definitions/bin/domain/entities/EntityPropertyDefinition';
+import { StringConvertor } from './adapter-interfaces/StringConvertor';
 const ERROR_TYPES = ['UNKNOWN_RUNTIME', 'PERMISSION_DENIED', 'NOT_FOUND'];
 
 export class GenerateGraphqlSchemaUseCase {
   constructor(
     readonly fileRepository: FileRepository,
     readonly entityDefinitionRepository: EntityDefinitionRepository,
+    readonly stringConvertor: StringConvertor,
   ) {}
 
   run = async (
@@ -89,7 +91,26 @@ ${properties.join('\n')}${
         relatedEntities.length > 0 ? '\n' + relatedEntities.join('\n') : ``
       }
 }
-
+`);
+      typeDefs.push(`${entity.properties
+        .filter((p): p is EntityPropertyDefinitionPrimitive => !p.isReference)
+        .filter(
+          (
+            p,
+          ): p is EntityPropertyDefinitionPrimitive & {
+            acceptableValues: [];
+          } => !!p.acceptableValues && p.acceptableValues?.length > 0,
+        )
+        .map(
+          (p) => `enum ${entity.name}${this.stringConvertor.pascalCase(
+            p.name,
+          )}Type {
+${p.acceptableValues
+  .map((v) => `  ${this.stringConvertor.screamSnakeCase(v)}`)
+  .join('\n')}
+}`,
+        )
+        .join('\n')}
 `);
     }
 
