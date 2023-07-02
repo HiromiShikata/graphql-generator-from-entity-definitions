@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "ast-to-entity-definitions": "^1.7.1",
+    "change-case-all": "^1.0.15",
     "commander": "^11.0.0"
   }
 }
