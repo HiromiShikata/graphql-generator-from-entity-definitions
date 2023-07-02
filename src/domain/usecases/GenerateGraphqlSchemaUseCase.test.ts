@@ -4,6 +4,19 @@ import { FileRepository } from './adapter-interfaces/FileRepository';
 import { EntityDefinitionRepository } from './adapter-interfaces/EntityRelationDefinitionRepository';
 import { EntityDefinition } from '../entities/EntityDefinition';
 
+const ignorePropertyNamesForCreation: string[] = [
+  'id',
+  'createdAt',
+  'updatedAt',
+  'createdUserId',
+  'updatedUserId',
+];
+const ignorePropertyNamesForUpdate: string[] = [
+  'createdAt',
+  'updatedAt',
+  'createdUserId',
+  'updatedUserId',
+];
 const entityDefinitions: EntityDefinition[] = [
   {
     name: 'User',
@@ -32,6 +45,34 @@ const entityDefinitions: EntityDefinition[] = [
       {
         name: 'deactivated',
         propertyType: 'boolean',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'createdAt',
+        propertyType: 'Date',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'createdUserId',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'updatedAt',
+        propertyType: 'Date',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'updatedUserId',
+        propertyType: 'string',
         isReference: false,
         isNullable: false,
         acceptableValues: null,
@@ -180,6 +221,10 @@ type User {
   name: String!
   pet: String
   deactivated: Boolean!
+  createdAt: Date!
+  createdUserId: String!
+  updatedAt: Date!
+  updatedUserId: String!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
@@ -530,6 +575,8 @@ type Mutation {
 `;
       const response = await useCase.run(
         domainEntitiesDirectoryPath,
+        ignorePropertyNamesForCreation,
+        ignorePropertyNamesForUpdate,
         outputGraphqlSchemaPath,
       );
 
@@ -782,7 +829,11 @@ type Mutation {
 }
 `;
 
-      const mutation = useCase.generateMutation(entityDefinitions);
+      const mutation = useCase.generateMutation(
+        entityDefinitions,
+        ignorePropertyNamesForCreation,
+        ignorePropertyNamesForUpdate,
+      );
 
       expect(mutation.trim()).toEqual(expectedMutation.trim());
     });
@@ -799,6 +850,10 @@ type User {
   name: String!
   pet: String
   deactivated: Boolean!
+  createdAt: Date!
+  createdUserId: String!
+  updatedAt: Date!
+  updatedUserId: String!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
