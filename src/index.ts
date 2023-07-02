@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { GenerateGraphqlSchemaUseCase } from './domain/usecases/GenerateGraphqlSchemaUseCase';
 import { FsFileRepository } from './adapter/repositories/FsFileRepository';
 import { AstEntityDefinitionRepository } from './adapter/repositories/AstEntityDefinitionRepository';
+import { ChangeCaseStringConvertor } from './adapter/repositories/ChangeCaseStringConvertor';
 
 const commaSeparatedList = (value: string, _previous: string[]): string[] => {
   return value.split(',');
@@ -36,6 +37,7 @@ program
       const useCase = new GenerateGraphqlSchemaUseCase(
         new FsFileRepository(),
         new AstEntityDefinitionRepository(),
+        new ChangeCaseStringConvertor(),
       );
       const res = await useCase.run(
         inputPath,
