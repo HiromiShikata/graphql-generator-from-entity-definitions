@@ -3,7 +3,7 @@ import { execSync } from 'child_process';
 describe('commander program', () => {
   it('should output file contents', async () => {
     const output = execSync(
-      'npx ts-node ./src/index.ts ./src/adapter/repositories/_testdata -o ./tmp/schema.graphql',
+      'npx ts-node ./src/index.ts ./src/adapter/repositories/_testdata -o ./tmp/schema.graphql --ignorePropertyNamesForCreation id,createdAt,updatedAt,createdUserId,updatedUserId --ignorePropertyNamesForUpdate createdAt,updatedAt,createdUserId,updatedUserId',
     ).toString();
     const expectedContent = `enum ErrorCode {
   UNKNOWN_RUNTIME
@@ -42,6 +42,8 @@ type User {
   id: ID!
   name: String!
   pet: String
+  createdAt: Date!
+  createdUserId: String!
 }
 
 
@@ -160,10 +162,12 @@ type Mutation {
 Generate GraphQL schema from entity definitions
 
 Arguments:
-  inputPath                      Path to domain entities dir.
+  inputPath                                                          Path to domain entities dir.
 
 Options:
-  -o, --outputPath <outputPath>  Path to schema.graphql.
-  -h, --help                     display help for command`);
+  -o, --outputPath <outputPath>                                      Path to schema.graphql.
+  --ignorePropertyNamesForCreation <ignorePropertyNamesForCreation>  Option to specify property names to be ignored when creating an object from the command line.
+  --ignorePropertyNamesForUpdate <ignorePropertyNamesForUpdate>      Option to specify property names to be ignored when updating an object from the command line.
+  -h, --help                                                         display help for command`);
   });
 });
