@@ -44,8 +44,13 @@ type User {
   pet: String
   createdAt: Date!
   createdUserId: String!
+  gender: String!
 }
-
+enum UserGenderType {
+  MAKE
+  FEMALE
+  OTHER
+}
 
 union UserResult =
     User
@@ -73,6 +78,7 @@ type Query {
 input CreateUserInput {
   name: String!
   pet: String
+  gender: String!
   clientMutationId: ID
 }
 
@@ -91,6 +97,7 @@ input UpdateUserInput {
   id: ID!
   name: String!
   pet: String
+  gender: String!
   clientMutationId: ID
 }
 

@@ -46,6 +46,13 @@ describe('AstEntityDefinitionRepository', () => {
               name: 'createdUserId',
               propertyType: 'string',
             },
+            {
+              acceptableValues: ['Make', 'Female', 'Other'],
+              isNullable: false,
+              isReference: false,
+              name: 'gender',
+              propertyType: 'string',
+            },
           ],
         },
       ]);
