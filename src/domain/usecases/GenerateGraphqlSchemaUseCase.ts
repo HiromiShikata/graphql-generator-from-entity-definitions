@@ -6,6 +6,7 @@ import {
   EntityPropertyDefinitionPrimitive,
   EntityPropertyDefinitionReferencedObject,
 } from '../entities/EntityPropertyDefinition';
+import { EntityPropertyDefinition } from 'ast-to-entity-definitions/bin/domain/entities/EntityPropertyDefinition';
 const ERROR_TYPES = ['UNKNOWN_RUNTIME', 'PERMISSION_DENIED', 'NOT_FOUND'];
 
 export class GenerateGraphqlSchemaUseCase {
@@ -16,6 +17,8 @@ export class GenerateGraphqlSchemaUseCase {
 
   run = async (
     domainEntitiesDirectoryPath: string,
+    ignorePropertyNamesForCreation: string[],
+    ignorePropertyNamesForUpdate: string[],
     outputGraphqlSchemaPath: string | null,
   ): Promise<string> => {
     const entityDefinitions: EntityDefinition[] =
@@ -24,7 +27,11 @@ export class GenerateGraphqlSchemaUseCase {
     const schema = `${this.generateErrorTypes(entityDefinitions)}
 ${this.generateTypes(entityDefinitions)}
 ${this.generateQuery(entityDefinitions)}
-${this.generateMutation(entityDefinitions)}
+${this.generateMutation(
+  entityDefinitions,
+  ignorePropertyNamesForCreation,
+  ignorePropertyNamesForUpdate,
+)}
 `;
     if (outputGraphqlSchemaPath) {
       await this.fileRepository.save(outputGraphqlSchemaPath, schema);
@@ -178,20 +185,46 @@ ${errors.map((error) => `  ${error}`).join(`\n`)}
 
 ${errorTypes.join('\n')}`;
   };
-  generateMutation = (entityDefinitions: EntityDefinition[]): string => {
+  generateMutation = (
+    entityDefinitions: EntityDefinition[],
+    ignorePropertyNamesForCreation: string[],
+    ignorePropertyNamesForUpdate: string[],
+  ): string => {
     const mutationTypes: string[] = [];
     for (const entity of entityDefinitions) {
       const uncapitalizedEntityName = this.uncapitalize(entity.name);
-      const properties = entity.properties
-        .filter((property) => property.name != 'id')
+      const generateLineForPropertyFromEntityPropertyDefinition = (
+        property: EntityPropertyDefinition,
+      ): string => {
+        if (property.isReference) {
+          return `  ${this.uncapitalize(
+            property.targetEntityDefinitionName,
+          )}Id: String!`;
+        } else if (property.name === 'id') {
+          return '  id: ID!';
+        } else {
+          return (
+            `  ${property.name}: ${this.mapToGraphQLType(
+              property.propertyType,
+            )}` + (property.isNullable ? '' : '!')
+          );
+        }
+      };
+      const propertiesForCreation = entity.properties
+        .filter(
+          (property) => !ignorePropertyNamesForCreation.includes(property.name),
+        )
         .map((property) =>
-          property.isReference
-            ? `  ${this.uncapitalize(
-                property.targetEntityDefinitionName,
-              )}Id: String!`
-            : `  ${property.name}: ${this.mapToGraphQLType(
-                property.propertyType,
-              )}` + (property.isNullable ? '' : '!'),
+          generateLineForPropertyFromEntityPropertyDefinition(property),
+        )
+        .join('\n');
+
+      const propertiesForUpdate = entity.properties
+        .filter(
+          (property) => !ignorePropertyNamesForUpdate.includes(property.name),
+        )
+        .map((property) =>
+          generateLineForPropertyFromEntityPropertyDefinition(property),
         )
         .join('\n');
       const notFoundError = entity.properties
@@ -202,7 +235,7 @@ ${errorTypes.join('\n')}`;
         .join('');
 
       const mutationType = `input Create${entity.name}Input {
-${properties}
+${propertiesForCreation}
   clientMutationId: ID
 }
 
@@ -218,8 +251,7 @@ union Create${entity.name}PayloadResult =
   | ErrorUnknownRuntime${notFoundError}
 
 input Update${entity.name}Input {
-  id: ID!
-${properties}
+${propertiesForUpdate}
   clientMutationId: ID
 }
 
