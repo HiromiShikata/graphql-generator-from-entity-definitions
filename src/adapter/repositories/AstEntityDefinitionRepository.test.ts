@@ -1,5 +1,5 @@
 // ./src/adapter/repositories/AstEntityDefinitionRepository.test.ts
-import { AstEntityDefinitionRepository } from '../../adapter/repositories/AstEntityDefinitionRepository';
+import { AstEntityDefinitionRepository } from './AstEntityDefinitionRepository';
 
 describe('AstEntityDefinitionRepository', () => {
   describe('find', () => {
@@ -30,6 +30,20 @@ describe('AstEntityDefinitionRepository', () => {
               isNullable: true,
               isReference: false,
               name: 'pet',
+              propertyType: 'string',
+            },
+            {
+              acceptableValues: null,
+              isNullable: false,
+              isReference: false,
+              name: 'createdAt',
+              propertyType: 'Date',
+            },
+            {
+              acceptableValues: null,
+              isNullable: false,
+              isReference: false,
+              name: 'createdUserId',
               propertyType: 'string',
             },
           ],
