@@ -111,7 +111,7 @@ ${properties.join('\n')}${
             p.name,
           )}Type {
 ${p.acceptableValues
-  .map((v) => `  ${this.stringConvertor.screamSnakeCase(v)}`)
+  .map((v) => `  ${v ? this.stringConvertor.screamSnakeCase(v) : 'EMPTY'}`)
   .join('\n')}
 }`,
         )

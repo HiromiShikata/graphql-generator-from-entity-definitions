@@ -47,7 +47,7 @@ describe('AstEntityDefinitionRepository', () => {
               targetEntityDefinitionName: 'User',
             },
             {
-              acceptableValues: ['Make', 'Female', 'Other'],
+              acceptableValues: ['', 'Make', 'Female', 'Other'],
               isNullable: false,
               isReference: false,
               name: 'gender',

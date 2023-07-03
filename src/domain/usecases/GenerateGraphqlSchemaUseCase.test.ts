@@ -42,7 +42,7 @@ const entityDefinitions: EntityDefinition[] = [
         propertyType: 'string',
         isReference: false,
         isNullable: false,
-        acceptableValues: ['Male', 'Female', 'Other'],
+        acceptableValues: ['Male', 'Female', 'Other', ''],
       },
       {
         name: 'pet',
@@ -254,6 +254,7 @@ enum UserGenderType {
   MALE
   FEMALE
   OTHER
+  EMPTY
 }
 type Group {
   id: ID!
@@ -906,6 +907,7 @@ enum UserGenderType {
   MALE
   FEMALE
   OTHER
+  EMPTY
 }
 type Group {
   id: ID!
