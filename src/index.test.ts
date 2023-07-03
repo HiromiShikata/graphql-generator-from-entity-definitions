@@ -49,6 +49,7 @@ type User {
   createdUserUserList: [UserListResult!]!
 }
 enum UserGenderType {
+  EMPTY
   MAKE
   FEMALE
   OTHER

@@ -4,5 +4,5 @@ export type User = {
   pet: string | null;
   createdAt: Date;
   createdUserId: User['id'] | null;
-  gender: 'Make' | 'Female' | 'Other';
+  gender: 'Make' | 'Female' | 'Other' | '';
 };
