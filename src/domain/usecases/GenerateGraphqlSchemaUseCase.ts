@@ -51,7 +51,7 @@ ${this.generateMutation(
         const name = property.name;
 
         const type = property.isReference
-          ? 'String!'
+          ? `String${property.isNullable ? '' : '!'}`
           : name === 'id'
           ? 'ID!'
           : this.mapToGraphQLType(property.propertyType) +

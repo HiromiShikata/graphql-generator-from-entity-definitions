@@ -239,10 +239,10 @@ type User {
   pet: String
   deactivated: Boolean!
   createdAt: Date!
-  createdUserId: String!
+  createdUserId: String
   createdUser: UserResult!
   updatedAt: Date!
-  updatedUserId: String!
+  updatedUserId: String
   updatedUser: UserResult!
   createdUserUserList: [UserListResult!]!
   updatedUserUserList: [UserListResult!]!
@@ -258,7 +258,7 @@ enum UserGenderType {
 type Group {
   id: ID!
   name: String!
-  createdUserId: String!
+  createdUserId: String
   createdUser: UserResult!
   userGroupList: [UserGroupListResult!]!
 }
@@ -891,10 +891,10 @@ type User {
   pet: String
   deactivated: Boolean!
   createdAt: Date!
-  createdUserId: String!
+  createdUserId: String
   createdUser: UserResult!
   updatedAt: Date!
-  updatedUserId: String!
+  updatedUserId: String
   updatedUser: UserResult!
   createdUserUserList: [UserListResult!]!
   updatedUserUserList: [UserListResult!]!
@@ -910,7 +910,7 @@ enum UserGenderType {
 type Group {
   id: ID!
   name: String!
-  createdUserId: String!
+  createdUserId: String
   createdUser: UserResult!
   userGroupList: [UserGroupListResult!]!
 }
