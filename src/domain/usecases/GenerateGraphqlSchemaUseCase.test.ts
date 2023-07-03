@@ -188,6 +188,12 @@ describe('GenerateGraphqlSchemaUseCase', () => {
   USER_PROFILE_NOT_FOUND
 }
 
+type Error {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 type ErrorUnknownRuntime {
   errorCode: ErrorCode!
   message: String
@@ -950,6 +956,12 @@ enum ErrorCode {
   GROUP_NOT_FOUND
   USER_GROUP_NOT_FOUND
   USER_PROFILE_NOT_FOUND
+}
+
+type Error {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
 }
 
 type ErrorUnknownRuntime {
