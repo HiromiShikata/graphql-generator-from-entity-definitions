@@ -235,6 +235,12 @@ ${queryMethods.join('\n')}
 ${errors.map((error) => `  ${error}`).join(`\n`)}
 }
 
+type Error {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 ${errorTypes.join('\n')}`;
   };
   generateMutation = (

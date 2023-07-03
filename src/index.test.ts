@@ -12,6 +12,12 @@ describe('commander program', () => {
   USER_NOT_FOUND
 }
 
+type Error {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 type ErrorUnknownRuntime {
   errorCode: ErrorCode!
   message: String
