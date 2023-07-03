@@ -3,6 +3,6 @@ export type User = {
   name: string;
   pet: string | null;
   createdAt: Date;
-  createdUserId: string;
+  createdUserId: User['id'] | null;
   gender: 'Make' | 'Female' | 'Other';
 };

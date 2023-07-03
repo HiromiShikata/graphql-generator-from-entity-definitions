@@ -44,7 +44,9 @@ type User {
   pet: String
   createdAt: Date!
   createdUserId: String!
+  createdUser: UserResult!
   gender: String!
+  createdUserUserList: [UserListResult!]!
 }
 enum UserGenderType {
   MAKE
@@ -72,7 +74,7 @@ union UserListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList: UserListResult!
+  userList(createdUserId: String): UserListResult!
 }
 
 input CreateUserInput {
@@ -92,6 +94,7 @@ union CreateUserPayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 input UpdateUserInput {
   id: ID!
