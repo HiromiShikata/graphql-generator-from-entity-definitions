@@ -40,11 +40,11 @@ describe('AstEntityDefinitionRepository', () => {
               propertyType: 'Date',
             },
             {
-              acceptableValues: null,
-              isNullable: false,
-              isReference: false,
+              isNullable: true,
+              isReference: true,
+              isUnique: false,
               name: 'createdUserId',
-              propertyType: 'string',
+              targetEntityDefinitionName: 'User',
             },
             {
               acceptableValues: ['Make', 'Female', 'Other'],

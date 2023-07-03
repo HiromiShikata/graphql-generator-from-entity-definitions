@@ -67,10 +67,10 @@ const entityDefinitions: EntityDefinition[] = [
       },
       {
         name: 'createdUserId',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: false,
+        isNullable: true,
       },
       {
         name: 'updatedAt',
@@ -81,10 +81,10 @@ const entityDefinitions: EntityDefinition[] = [
       },
       {
         name: 'updatedUserId',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: false,
+        isNullable: true,
       },
     ],
   },
@@ -104,6 +104,13 @@ const entityDefinitions: EntityDefinition[] = [
         isReference: false,
         isNullable: false,
         acceptableValues: null,
+      },
+      {
+        name: 'createdUserId',
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: false,
+        isNullable: true,
       },
     ],
   },
@@ -233,8 +240,13 @@ type User {
   deactivated: Boolean!
   createdAt: Date!
   createdUserId: String!
+  createdUser: UserResult!
   updatedAt: Date!
   updatedUserId: String!
+  updatedUser: UserResult!
+  createdUserUserList: [UserListResult!]!
+  updatedUserUserList: [UserListResult!]!
+  createdUserGroupList: [GroupListResult!]!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
@@ -246,6 +258,8 @@ enum UserGenderType {
 type Group {
   id: ID!
   name: String!
+  createdUserId: String!
+  createdUser: UserResult!
   userGroupList: [UserGroupListResult!]!
 }
 
@@ -289,6 +303,7 @@ union GroupResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorGroupNotFound
+  | ErrorUserNotFound
 
 type GroupList {
   items: [Group!]!
@@ -300,6 +315,7 @@ union GroupListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 union UserGroupResult =
     UserGroup
@@ -345,9 +361,9 @@ union UserProfileListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList: UserListResult!
+  userList(createdUserId: String, updatedUserId: String): UserListResult!
   group(id: ID!): GroupResult!
-  groupList: GroupListResult!
+  groupList(createdUserId: String): GroupListResult!
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: String, groupId: String): UserGroupListResult!
   userProfile(id: ID!): UserProfileResult!
@@ -372,6 +388,7 @@ union CreateUserPayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -426,6 +443,7 @@ union CreateGroupPayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -444,6 +462,7 @@ union UpdateGroupPayloadResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorGroupNotFound
+  | ErrorUserNotFound
 
 input DeleteGroupInput {
   id: ID!
@@ -629,6 +648,7 @@ union CreateUserPayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 input UpdateUserInput {
   id: ID!
@@ -683,6 +703,7 @@ union CreateGroupPayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 input UpdateGroupInput {
   id: ID!
@@ -701,6 +722,7 @@ union UpdateGroupPayloadResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorGroupNotFound
+  | ErrorUserNotFound
 
 input DeleteGroupInput {
   id: ID!
@@ -870,8 +892,13 @@ type User {
   deactivated: Boolean!
   createdAt: Date!
   createdUserId: String!
+  createdUser: UserResult!
   updatedAt: Date!
   updatedUserId: String!
+  updatedUser: UserResult!
+  createdUserUserList: [UserListResult!]!
+  updatedUserUserList: [UserListResult!]!
+  createdUserGroupList: [GroupListResult!]!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
 }
@@ -883,6 +910,8 @@ enum UserGenderType {
 type Group {
   id: ID!
   name: String!
+  createdUserId: String!
+  createdUser: UserResult!
   userGroupList: [UserGroupListResult!]!
 }
 
@@ -899,8 +928,7 @@ type UserProfile {
   userId: String!
   user: UserResult!
   nickname: String!
-}
-`;
+}`;
 
       const typeDefs = useCase.generateTypes(entityDefinitions);
 
@@ -999,6 +1027,7 @@ union GroupResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | ErrorGroupNotFound
+  | ErrorUserNotFound
 
 type GroupList {
   items: [Group!]!
@@ -1010,6 +1039,7 @@ union GroupListResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
+  | ErrorUserNotFound
 
 union UserGroupResult =
     UserGroup
@@ -1055,15 +1085,14 @@ union UserProfileListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList: UserListResult!
+  userList(createdUserId: String, updatedUserId: String): UserListResult!
   group(id: ID!): GroupResult!
-  groupList: GroupListResult!
+  groupList(createdUserId: String): GroupListResult!
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: String, groupId: String): UserGroupListResult!
   userProfile(id: ID!): UserProfileResult!
   userProfileList(userId: String): UserProfileListResult!
-}
-`;
+}`;
 
       const queryDefs = useCase.generateQuery(entityDefinitions);
 

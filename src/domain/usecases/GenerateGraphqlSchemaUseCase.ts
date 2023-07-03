@@ -59,7 +59,7 @@ ${this.generateMutation(
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
           properties.push(
-            `  ${this.uncapitalize(property.targetEntityDefinitionName)}: ${
+            `  ${property.name.replace(/Id$/, '')}: ${
               property.targetEntityDefinitionName
             }Result!`,
           );
@@ -80,9 +80,14 @@ ${this.generateMutation(
               ? `  ${this.uncapitalize(relatedEntity.name)}: ${
                   relatedEntity.name
                 }`
-              : `  ${this.uncapitalize(relatedEntity.name)}List: [${
-                  relatedEntity.name
-                }ListResult!]!`,
+              : `  ${
+                  relatedProperty.name.replace(/Id$/, '') !==
+                  this.stringConvertor.camelCase(entity.name)
+                    ? `${relatedProperty.name.replace(/Id$/, '')}${
+                        relatedEntity.name
+                      }`
+                    : this.uncapitalize(relatedEntity.name)
+                }List: [${relatedEntity.name}ListResult!]!`,
           ),
       );
 
@@ -138,6 +143,19 @@ ${p.acceptableValues
         .filter(
           (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
         )
+        .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
+          if (
+            curr.targetEntityDefinitionName === entity.name ||
+            prev.find(
+              (p) =>
+                p.targetEntityDefinitionName ===
+                curr.targetEntityDefinitionName,
+            )
+          ) {
+            return prev;
+          }
+          return [...prev, curr];
+        }, [])
         .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
         .join('')}
 
@@ -152,6 +170,19 @@ union ${entity.name}ListResult =
   | ErrorPermissionDenied
   | ErrorUnknownRuntime${entity.properties
     .filter((p): p is EntityPropertyDefinitionReferencedObject => p.isReference)
+    .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
+      if (
+        curr.targetEntityDefinitionName === entity.name ||
+        prev.find(
+          (p) =>
+            p.targetEntityDefinitionName === curr.targetEntityDefinitionName,
+        )
+      ) {
+        return prev;
+      }
+      return [...prev, curr];
+    }, [])
+
     .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
     .join('')}
 `;
@@ -248,10 +279,42 @@ ${errorTypes.join('\n')}`;
           generateLineForPropertyFromEntityPropertyDefinition(property),
         )
         .join('\n');
-      const notFoundError = entity.properties
+      const notFoundErrorForCreation = entity.properties
         .filter(
           (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
         )
+        .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
+          if (
+            prev.find(
+              (p) =>
+                p.targetEntityDefinitionName ===
+                curr.targetEntityDefinitionName,
+            )
+          ) {
+            return prev;
+          }
+          return [...prev, curr];
+        }, [])
+        .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
+        .join('');
+
+      const notFoundErrorForUpdate = entity.properties
+        .filter(
+          (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
+        )
+        .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
+          if (
+            curr.targetEntityDefinitionName === entity.name ||
+            prev.find(
+              (p) =>
+                p.targetEntityDefinitionName ===
+                curr.targetEntityDefinitionName,
+            )
+          ) {
+            return prev;
+          }
+          return [...prev, curr];
+        }, [])
         .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
         .join('');
 
@@ -269,7 +332,7 @@ union Create${entity.name}PayloadResult =
     Create${entity.name}Payload
   | ErrorNotFound
   | ErrorPermissionDenied
-  | ErrorUnknownRuntime${notFoundError}
+  | ErrorUnknownRuntime${notFoundErrorForCreation}
 
 input Update${entity.name}Input {
 ${propertiesForUpdate}
@@ -286,7 +349,7 @@ union Update${entity.name}PayloadResult =
   | ErrorNotFound
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
-  | Error${entity.name}NotFound${notFoundError}
+  | Error${entity.name}NotFound${notFoundErrorForUpdate}
 
 input Delete${entity.name}Input {
   id: ID!
