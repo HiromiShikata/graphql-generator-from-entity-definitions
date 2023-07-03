@@ -43,7 +43,7 @@ type User {
   name: String!
   pet: String
   createdAt: Date!
-  createdUserId: String!
+  createdUserId: String
   createdUser: UserResult!
   gender: String!
   createdUserUserList: [UserListResult!]!
