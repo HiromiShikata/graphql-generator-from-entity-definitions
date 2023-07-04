@@ -194,12 +194,20 @@ union ${entity.name}ListResult =
         ? `(${entity.properties
             .filter(
               (p): p is EntityPropertyDefinitionReferencedObject =>
-                p.isReference,
+                p.isReference && !p.isUnique,
             )
-            .map((p) => `${p.name}: String`)
+            .map((p) => `${p.name}: ID`)
             .join(', ')})`
         : ``;
-      return `  ${this.uncapitalize(entity.name)}(id: ID!): ${
+      const queryOneParameters = entity.properties.filter(
+        (p) =>
+          p.name === 'id' || (p.isReference && p.isUnique && !p.isNullable),
+      );
+      const queryOneParameter =
+        queryOneParameters.length > 1
+          ? `${queryOneParameters.map((p) => `${p.name}: ID`).join(', ')}`
+          : `${queryOneParameters[0].name}: ID!`;
+      return `  ${this.uncapitalize(entity.name)}(${queryOneParameter}): ${
         entity.name
       }Result!
   ${this.uncapitalize(entity.name)}List${queryListParameter}: ${
