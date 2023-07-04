@@ -1,0 +1,38 @@
+name: Semantic Release Dry Run
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  semantic-release-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - run: git switch -c main
+      - name: Semantic Release Dry Run
+        id: semantic
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          RELEASE_NOTES=$(npx semantic-release --branches $BRANCH_NAME --dry-run | grep "release notes:" -A3)
+          echo "::set-output name=notes::$RELEASE_NOTES"
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: ${{ steps.semantic.outputs.notes }}
+          allow-repeats: false
