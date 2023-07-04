@@ -185,6 +185,44 @@ const entityDefinitions: EntityDefinition[] = [
       },
     ],
   },
+  {
+    name: 'Book',
+    properties: [
+      {
+        name: 'id',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: null,
+      },
+      {
+        name: 'title',
+        isReference: false,
+        propertyType: 'string',
+        isNullable: false,
+        acceptableValues: null,
+      },
+    ],
+  },
+  {
+    name: 'UserBook',
+    properties: [
+      {
+        name: 'userId',
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: false,
+        isNullable: false,
+      },
+      {
+        name: 'bookId',
+        targetEntityDefinitionName: 'Book',
+        isReference: true,
+        isUnique: false,
+        isNullable: false,
+      },
+    ],
+  },
 ];
 
 describe('GenerateGraphqlSchemaUseCase', () => {
@@ -197,7 +235,9 @@ describe('GenerateGraphqlSchemaUseCase', () => {
       const domainEntitiesDirectoryPath = '/path/to/domain/entities';
       const outputGraphqlSchemaPath = '/path/to/output/schema.graphql';
 
-      const expectedSchema = `enum ErrorCode {
+      const expectedSchema = `
+
+enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
@@ -206,6 +246,8 @@ describe('GenerateGraphqlSchemaUseCase', () => {
   USER_GROUP_NOT_FOUND
   USER_PROFILE_NOT_FOUND
   USER_PREFERENCE_NOT_FOUND
+  BOOK_NOT_FOUND
+  USER_BOOK_NOT_FOUND
 }
 
 type Error {
@@ -262,6 +304,18 @@ type ErrorUserPreferenceNotFound {
   stack: String
 }
 
+type ErrorBookNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserBookNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 scalar Date
 
 type User {
@@ -282,6 +336,7 @@ type User {
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
   userPreference: UserPreference
+  userBookList: [UserBookListResult!]!
 }
 enum UserGenderType {
   MALE
@@ -316,6 +371,19 @@ type UserPreference {
   userId: String!
   user: UserResult!
   themeColor: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  userBookList: [UserBookListResult!]!
+}
+
+type UserBook {
+  userId: String!
+  user: UserResult!
+  bookId: String!
+  book: BookResult!
 }
 
 
@@ -419,6 +487,46 @@ union UserPreferenceListResult =
   | ErrorUnknownRuntime
   | ErrorUserNotFound
 
+union BookResult =
+    Book
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorBookNotFound
+
+type BookList {
+  itemList: [Book!]!
+  total: Int!
+}
+
+union BookListResult =
+    BookList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
+union UserBookResult =
+    UserBook
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserBookNotFound
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+type UserBookList {
+  itemList: [UserBook!]!
+  total: Int!
+}
+
+union UserBookListResult =
+    UserBookList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
 type Query {
   user(id: ID!): UserResult!
   userList(createdUserId: ID, updatedUserId: ID): UserListResult!
@@ -430,6 +538,9 @@ type Query {
   userProfileList(): UserProfileListResult!
   userPreference(userId: ID!): UserPreferenceResult!
   userPreferenceList(): UserPreferenceListResult!
+  book(id: ID!): BookResult!
+  bookList: BookListResult!
+  userBookList(userId: ID, bookId: ID): UserBookListResult!
 }
 
 input CreateUserInput {
@@ -709,6 +820,113 @@ union DeleteUserPreferencePayloadResult =
   | ErrorPermissionDenied
   | ErrorUserPreferenceNotFound
 
+input CreateBookInput {
+  title: String!
+  clientMutationId: ID
+}
+
+type CreateBookPayload {
+  book: Book!
+  clientMutationId: ID
+}
+
+union CreateBookPayloadResult =
+    CreateBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
+input UpdateBookInput {
+  id: ID!
+  title: String!
+  clientMutationId: ID
+}
+
+type UpdateBookPayload {
+  book: Book!
+  clientMutationId: ID
+}
+
+union UpdateBookPayloadResult =
+    UpdateBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorBookNotFound
+
+input DeleteBookInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteBookPayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteBookPayloadResult =
+    DeleteBookPayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorBookNotFound
+
+input CreateUserBookInput {
+  userId: String!
+  bookId: String!
+  clientMutationId: ID
+}
+
+type CreateUserBookPayload {
+  userBook: UserBook!
+  clientMutationId: ID
+}
+
+union CreateUserBookPayloadResult =
+    CreateUserBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+input UpdateUserBookInput {
+  userId: String!
+  bookId: String!
+  clientMutationId: ID
+}
+
+type UpdateUserBookPayload {
+  userBook: UserBook!
+  clientMutationId: ID
+}
+
+union UpdateUserBookPayloadResult =
+    UpdateUserBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserBookNotFound
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+input DeleteUserBookInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteUserBookPayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteUserBookPayloadResult =
+    DeleteUserBookPayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorUserBookNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -725,7 +943,15 @@ type Mutation {
   createUserPreference(input: CreateUserPreferenceInput!): CreateUserPreferencePayloadResult!
   updateUserPreference(input: UpdateUserPreferenceInput!): UpdateUserPreferencePayloadResult!
   deleteUserPreference(input: DeleteUserPreferenceInput!): DeleteUserPreferencePayloadResult!
+  createBook(input: CreateBookInput!): CreateBookPayloadResult!
+  updateBook(input: UpdateBookInput!): UpdateBookPayloadResult!
+  deleteBook(input: DeleteBookInput!): DeleteBookPayloadResult!
+  createUserBook(input: CreateUserBookInput!): CreateUserBookPayloadResult!
+  updateUserBook(input: UpdateUserBookInput!): UpdateUserBookPayloadResult!
+  deleteUserBook(input: DeleteUserBookInput!): DeleteUserBookPayloadResult!
 }
+
+
 `;
       const response = await useCase.run(
         domainEntitiesDirectoryPath,
@@ -740,7 +966,7 @@ type Mutation {
       );
       expect(fileRepository.save).toHaveBeenCalledWith(
         outputGraphqlSchemaPath,
-        expectedSchema,
+        expectedSchema.trim(),
       );
     });
   });
@@ -748,7 +974,8 @@ type Mutation {
     it('should generate type definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedMutation = `input CreateUserInput {
+      const expectedMutation = `
+input CreateUserInput {
   name: String!
   gender: String!
   pet: String
@@ -1025,6 +1252,113 @@ union DeleteUserPreferencePayloadResult =
   | ErrorPermissionDenied
   | ErrorUserPreferenceNotFound
 
+input CreateBookInput {
+  title: String!
+  clientMutationId: ID
+}
+
+type CreateBookPayload {
+  book: Book!
+  clientMutationId: ID
+}
+
+union CreateBookPayloadResult =
+    CreateBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
+input UpdateBookInput {
+  id: ID!
+  title: String!
+  clientMutationId: ID
+}
+
+type UpdateBookPayload {
+  book: Book!
+  clientMutationId: ID
+}
+
+union UpdateBookPayloadResult =
+    UpdateBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorBookNotFound
+
+input DeleteBookInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteBookPayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteBookPayloadResult =
+    DeleteBookPayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorBookNotFound
+
+input CreateUserBookInput {
+  userId: String!
+  bookId: String!
+  clientMutationId: ID
+}
+
+type CreateUserBookPayload {
+  userBook: UserBook!
+  clientMutationId: ID
+}
+
+union CreateUserBookPayloadResult =
+    CreateUserBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+input UpdateUserBookInput {
+  userId: String!
+  bookId: String!
+  clientMutationId: ID
+}
+
+type UpdateUserBookPayload {
+  userBook: UserBook!
+  clientMutationId: ID
+}
+
+union UpdateUserBookPayloadResult =
+    UpdateUserBookPayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserBookNotFound
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+input DeleteUserBookInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteUserBookPayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteUserBookPayloadResult =
+    DeleteUserBookPayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorUserBookNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -1041,7 +1375,14 @@ type Mutation {
   createUserPreference(input: CreateUserPreferenceInput!): CreateUserPreferencePayloadResult!
   updateUserPreference(input: UpdateUserPreferenceInput!): UpdateUserPreferencePayloadResult!
   deleteUserPreference(input: DeleteUserPreferenceInput!): DeleteUserPreferencePayloadResult!
+  createBook(input: CreateBookInput!): CreateBookPayloadResult!
+  updateBook(input: UpdateBookInput!): UpdateBookPayloadResult!
+  deleteBook(input: DeleteBookInput!): DeleteBookPayloadResult!
+  createUserBook(input: CreateUserBookInput!): CreateUserBookPayloadResult!
+  updateUserBook(input: UpdateUserBookInput!): UpdateUserBookPayloadResult!
+  deleteUserBook(input: DeleteUserBookInput!): DeleteUserBookPayloadResult!
 }
+
 
 `;
 
@@ -1058,7 +1399,8 @@ type Mutation {
     it('should generate type definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedTypeDefs = `scalar Date
+      const expectedTypeDefs = `
+scalar Date
 
 type User {
   id: ID!
@@ -1078,6 +1420,7 @@ type User {
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
   userPreference: UserPreference
+  userBookList: [UserBookListResult!]!
 }
 enum UserGenderType {
   MALE
@@ -1112,7 +1455,22 @@ type UserPreference {
   userId: String!
   user: UserResult!
   themeColor: String!
-}`;
+}
+
+type Book {
+  id: ID!
+  title: String!
+  userBookList: [UserBookListResult!]!
+}
+
+type UserBook {
+  userId: String!
+  user: UserResult!
+  bookId: String!
+  book: BookResult!
+}
+
+`;
 
       const typeDefs = useCase.generateTypes(entityDefinitions);
 
@@ -1132,6 +1490,8 @@ type UserPreference {
   USER_GROUP_NOT_FOUND
   USER_PROFILE_NOT_FOUND
   USER_PREFERENCE_NOT_FOUND
+  BOOK_NOT_FOUND
+  USER_BOOK_NOT_FOUND
 }
 
 type Error {
@@ -1187,6 +1547,19 @@ type ErrorUserPreferenceNotFound {
   message: String
   stack: String
 }
+
+type ErrorBookNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
+type ErrorUserBookNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 `;
 
       const typeDefs = useCase.generateErrorTypes(entityDefinitions);
@@ -1198,7 +1571,10 @@ type ErrorUserPreferenceNotFound {
     it('should generate query definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedQueryDefs = `union UserResult =
+      const expectedQueryDefs = `
+
+
+union UserResult =
     User
   | ErrorNotFound
   | ErrorPermissionDenied
@@ -1298,6 +1674,46 @@ union UserPreferenceListResult =
   | ErrorUnknownRuntime
   | ErrorUserNotFound
 
+union BookResult =
+    Book
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorBookNotFound
+
+type BookList {
+  itemList: [Book!]!
+  total: Int!
+}
+
+union BookListResult =
+    BookList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+
+union UserBookResult =
+    UserBook
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserBookNotFound
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
+type UserBookList {
+  itemList: [UserBook!]!
+  total: Int!
+}
+
+union UserBookListResult =
+    UserBookList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+  | ErrorBookNotFound
+
 type Query {
   user(id: ID!): UserResult!
   userList(createdUserId: ID, updatedUserId: ID): UserListResult!
@@ -1309,7 +1725,13 @@ type Query {
   userProfileList(): UserProfileListResult!
   userPreference(userId: ID!): UserPreferenceResult!
   userPreferenceList(): UserPreferenceListResult!
-}`;
+  book(id: ID!): BookResult!
+  bookList: BookListResult!
+  userBookList(userId: ID, bookId: ID): UserBookListResult!
+}
+
+
+`;
 
       const queryDefs = useCase.generateQuery(entityDefinitions);
 
