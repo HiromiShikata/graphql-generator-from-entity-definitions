@@ -69,7 +69,7 @@ union UserResult =
   | ErrorUserNotFound
 
 type UserList {
-  items: [User!]!
+  itemList: [User!]!
   total: Int!
 }
 
