@@ -81,7 +81,7 @@ union UserListResult =
 
 type Query {
   user(id: ID!): UserResult!
-  userList(createdUserId: String): UserListResult!
+  userList(createdUserId: ID): UserListResult!
 }
 
 input CreateUserInput {

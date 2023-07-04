@@ -166,6 +166,25 @@ const entityDefinitions: EntityDefinition[] = [
       },
     ],
   },
+  {
+    name: 'UserPreference',
+    properties: [
+      {
+        name: 'userId',
+        targetEntityDefinitionName: 'User',
+        isReference: true,
+        isUnique: true,
+        isNullable: false,
+      },
+      {
+        name: 'themeColor',
+        isReference: false,
+        propertyType: 'string',
+        isNullable: false,
+        acceptableValues: null,
+      },
+    ],
+  },
 ];
 
 describe('GenerateGraphqlSchemaUseCase', () => {
@@ -186,6 +205,7 @@ describe('GenerateGraphqlSchemaUseCase', () => {
   GROUP_NOT_FOUND
   USER_GROUP_NOT_FOUND
   USER_PROFILE_NOT_FOUND
+  USER_PREFERENCE_NOT_FOUND
 }
 
 type Error {
@@ -236,6 +256,12 @@ type ErrorUserProfileNotFound {
   stack: String
 }
 
+type ErrorUserPreferenceNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
+
 scalar Date
 
 type User {
@@ -255,6 +281,7 @@ type User {
   createdUserGroupList: [GroupListResult!]!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
+  userPreference: UserPreference
 }
 enum UserGenderType {
   MALE
@@ -283,6 +310,12 @@ type UserProfile {
   userId: String!
   user: UserResult!
   nickname: String!
+}
+
+type UserPreference {
+  userId: String!
+  user: UserResult!
+  themeColor: String!
 }
 
 
@@ -366,15 +399,37 @@ union UserProfileListResult =
   | ErrorUnknownRuntime
   | ErrorUserNotFound
 
+union UserPreferenceResult =
+    UserPreference
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserPreferenceNotFound
+  | ErrorUserNotFound
+
+type UserPreferenceList {
+  itemList: [UserPreference!]!
+  total: Int!
+}
+
+union UserPreferenceListResult =
+    UserPreferenceList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+
 type Query {
   user(id: ID!): UserResult!
-  userList(createdUserId: String, updatedUserId: String): UserListResult!
+  userList(createdUserId: ID, updatedUserId: ID): UserListResult!
   group(id: ID!): GroupResult!
-  groupList(createdUserId: String): GroupListResult!
+  groupList(createdUserId: ID): GroupListResult!
   userGroup(id: ID!): UserGroupResult!
-  userGroupList(userId: String, groupId: String): UserGroupListResult!
-  userProfile(id: ID!): UserProfileResult!
-  userProfileList(userId: String): UserProfileListResult!
+  userGroupList(userId: ID, groupId: ID): UserGroupListResult!
+  userProfile(id: ID, userId: ID): UserProfileResult!
+  userProfileList(): UserProfileListResult!
+  userPreference(userId: ID!): UserPreferenceResult!
+  userPreferenceList(): UserPreferenceListResult!
 }
 
 input CreateUserInput {
@@ -600,6 +655,60 @@ union DeleteUserProfilePayloadResult =
   | ErrorPermissionDenied
   | ErrorUserProfileNotFound
 
+input CreateUserPreferenceInput {
+  userId: String!
+  themeColor: String!
+  clientMutationId: ID
+}
+
+type CreateUserPreferencePayload {
+  userPreference: UserPreference!
+  clientMutationId: ID
+}
+
+union CreateUserPreferencePayloadResult =
+    CreateUserPreferencePayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+
+input UpdateUserPreferenceInput {
+  userId: String!
+  themeColor: String!
+  clientMutationId: ID
+}
+
+type UpdateUserPreferencePayload {
+  userPreference: UserPreference!
+  clientMutationId: ID
+}
+
+union UpdateUserPreferencePayloadResult =
+    UpdateUserPreferencePayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserPreferenceNotFound
+  | ErrorUserNotFound
+
+input DeleteUserPreferenceInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteUserPreferencePayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteUserPreferencePayloadResult =
+    DeleteUserPreferencePayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorUserPreferenceNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -613,6 +722,9 @@ type Mutation {
   createUserProfile(input: CreateUserProfileInput!): CreateUserProfilePayloadResult!
   updateUserProfile(input: UpdateUserProfileInput!): UpdateUserProfilePayloadResult!
   deleteUserProfile(input: DeleteUserProfileInput!): DeleteUserProfilePayloadResult!
+  createUserPreference(input: CreateUserPreferenceInput!): CreateUserPreferencePayloadResult!
+  updateUserPreference(input: UpdateUserPreferenceInput!): UpdateUserPreferencePayloadResult!
+  deleteUserPreference(input: DeleteUserPreferenceInput!): DeleteUserPreferencePayloadResult!
 }
 `;
       const response = await useCase.run(
@@ -622,7 +734,7 @@ type Mutation {
         outputGraphqlSchemaPath,
       );
 
-      expect(response).toEqual(expectedSchema);
+      expect(response.trim()).toEqual(expectedSchema.trim());
       expect(entityDefinitionRepository.find).toHaveBeenCalledWith(
         domainEntitiesDirectoryPath,
       );
@@ -636,8 +748,7 @@ type Mutation {
     it('should generate type definitions for all entity definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedMutation = `
-input CreateUserInput {
+      const expectedMutation = `input CreateUserInput {
   name: String!
   gender: String!
   pet: String
@@ -860,6 +971,60 @@ union DeleteUserProfilePayloadResult =
   | ErrorPermissionDenied
   | ErrorUserProfileNotFound
 
+input CreateUserPreferenceInput {
+  userId: String!
+  themeColor: String!
+  clientMutationId: ID
+}
+
+type CreateUserPreferencePayload {
+  userPreference: UserPreference!
+  clientMutationId: ID
+}
+
+union CreateUserPreferencePayloadResult =
+    CreateUserPreferencePayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+
+input UpdateUserPreferenceInput {
+  userId: String!
+  themeColor: String!
+  clientMutationId: ID
+}
+
+type UpdateUserPreferencePayload {
+  userPreference: UserPreference!
+  clientMutationId: ID
+}
+
+union UpdateUserPreferencePayloadResult =
+    UpdateUserPreferencePayload
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserPreferenceNotFound
+  | ErrorUserNotFound
+
+input DeleteUserPreferenceInput {
+  id: ID!
+  clientMutationId: ID
+}
+
+type DeleteUserPreferencePayload {
+  id: ID!
+  clientMutationId: ID
+}
+
+union DeleteUserPreferencePayloadResult =
+    DeleteUserPreferencePayload
+  | ErrorNotFound
+  | ErrorUnknownRuntime
+  | ErrorPermissionDenied
+  | ErrorUserPreferenceNotFound
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayloadResult!
   updateUser(input: UpdateUserInput!): UpdateUserPayloadResult!
@@ -873,7 +1038,11 @@ type Mutation {
   createUserProfile(input: CreateUserProfileInput!): CreateUserProfilePayloadResult!
   updateUserProfile(input: UpdateUserProfileInput!): UpdateUserProfilePayloadResult!
   deleteUserProfile(input: DeleteUserProfileInput!): DeleteUserProfilePayloadResult!
+  createUserPreference(input: CreateUserPreferenceInput!): CreateUserPreferencePayloadResult!
+  updateUserPreference(input: UpdateUserPreferenceInput!): UpdateUserPreferencePayloadResult!
+  deleteUserPreference(input: DeleteUserPreferenceInput!): DeleteUserPreferencePayloadResult!
 }
+
 `;
 
       const mutation = useCase.generateMutation(
@@ -908,6 +1077,7 @@ type User {
   createdUserGroupList: [GroupListResult!]!
   userGroupList: [UserGroupListResult!]!
   userProfile: UserProfile
+  userPreference: UserPreference
 }
 enum UserGenderType {
   MALE
@@ -936,6 +1106,12 @@ type UserProfile {
   userId: String!
   user: UserResult!
   nickname: String!
+}
+
+type UserPreference {
+  userId: String!
+  user: UserResult!
+  themeColor: String!
 }`;
 
       const typeDefs = useCase.generateTypes(entityDefinitions);
@@ -947,8 +1123,7 @@ type UserProfile {
     it('should generate error type definitions', () => {
       const { useCase } = createUseCaseAndMockRepositories();
 
-      const expectedTypeDefs = `
-enum ErrorCode {
+      const expectedTypeDefs = `enum ErrorCode {
   UNKNOWN_RUNTIME
   PERMISSION_DENIED
   NOT_FOUND
@@ -956,6 +1131,7 @@ enum ErrorCode {
   GROUP_NOT_FOUND
   USER_GROUP_NOT_FOUND
   USER_PROFILE_NOT_FOUND
+  USER_PREFERENCE_NOT_FOUND
 }
 
 type Error {
@@ -1006,6 +1182,11 @@ type ErrorUserProfileNotFound {
   stack: String
 }
 
+type ErrorUserPreferenceNotFound {
+  errorCode: ErrorCode!
+  message: String
+  stack: String
+}
 `;
 
       const typeDefs = useCase.generateErrorTypes(entityDefinitions);
@@ -1097,15 +1278,37 @@ union UserProfileListResult =
   | ErrorUnknownRuntime
   | ErrorUserNotFound
 
+union UserPreferenceResult =
+    UserPreference
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserPreferenceNotFound
+  | ErrorUserNotFound
+
+type UserPreferenceList {
+  itemList: [UserPreference!]!
+  total: Int!
+}
+
+union UserPreferenceListResult =
+    UserPreferenceList
+  | ErrorNotFound
+  | ErrorPermissionDenied
+  | ErrorUnknownRuntime
+  | ErrorUserNotFound
+
 type Query {
   user(id: ID!): UserResult!
-  userList(createdUserId: String, updatedUserId: String): UserListResult!
+  userList(createdUserId: ID, updatedUserId: ID): UserListResult!
   group(id: ID!): GroupResult!
-  groupList(createdUserId: String): GroupListResult!
+  groupList(createdUserId: ID): GroupListResult!
   userGroup(id: ID!): UserGroupResult!
-  userGroupList(userId: String, groupId: String): UserGroupListResult!
-  userProfile(id: ID!): UserProfileResult!
-  userProfileList(userId: String): UserProfileListResult!
+  userGroupList(userId: ID, groupId: ID): UserGroupListResult!
+  userProfile(id: ID, userId: ID): UserProfileResult!
+  userProfileList(): UserProfileListResult!
+  userPreference(userId: ID!): UserPreferenceResult!
+  userPreferenceList(): UserPreferenceListResult!
 }`;
 
       const queryDefs = useCase.generateQuery(entityDefinitions);
