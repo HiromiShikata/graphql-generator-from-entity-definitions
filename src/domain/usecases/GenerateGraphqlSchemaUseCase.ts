@@ -160,7 +160,7 @@ ${p.acceptableValues
         .join('')}
 
 type ${entity.name}List {
-  items: [${entity.name}!]!
+  itemList: [${entity.name}!]!
   total: Int!
 }
 

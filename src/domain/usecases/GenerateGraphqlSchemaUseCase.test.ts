@@ -294,7 +294,7 @@ union UserResult =
   | ErrorUserNotFound
 
 type UserList {
-  items: [User!]!
+  itemList: [User!]!
   total: Int!
 }
 
@@ -313,7 +313,7 @@ union GroupResult =
   | ErrorUserNotFound
 
 type GroupList {
-  items: [Group!]!
+  itemList: [Group!]!
   total: Int!
 }
 
@@ -334,7 +334,7 @@ union UserGroupResult =
   | ErrorGroupNotFound
 
 type UserGroupList {
-  items: [UserGroup!]!
+  itemList: [UserGroup!]!
   total: Int!
 }
 
@@ -355,7 +355,7 @@ union UserProfileResult =
   | ErrorUserNotFound
 
 type UserProfileList {
-  items: [UserProfile!]!
+  itemList: [UserProfile!]!
   total: Int!
 }
 
@@ -1025,7 +1025,7 @@ type ErrorUserProfileNotFound {
   | ErrorUserNotFound
 
 type UserList {
-  items: [User!]!
+  itemList: [User!]!
   total: Int!
 }
 
@@ -1044,7 +1044,7 @@ union GroupResult =
   | ErrorUserNotFound
 
 type GroupList {
-  items: [Group!]!
+  itemList: [Group!]!
   total: Int!
 }
 
@@ -1065,7 +1065,7 @@ union UserGroupResult =
   | ErrorGroupNotFound
 
 type UserGroupList {
-  items: [UserGroup!]!
+  itemList: [UserGroup!]!
   total: Int!
 }
 
@@ -1086,7 +1086,7 @@ union UserProfileResult =
   | ErrorUserNotFound
 
 type UserProfileList {
-  items: [UserProfile!]!
+  itemList: [UserProfile!]!
   total: Int!
 }
 
