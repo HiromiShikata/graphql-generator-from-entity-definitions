@@ -14,7 +14,7 @@ class GenerateGraphqlSchemaUseCase {
 ${this.generateTypes(entityDefinitions)}
 ${this.generateQuery(entityDefinitions)}
 ${this.generateMutation(entityDefinitions, ignorePropertyNamesForCreation, ignorePropertyNamesForUpdate)}
-`;
+`.trim();
             if (outputGraphqlSchemaPath) {
                 await this.fileRepository.save(outputGraphqlSchemaPath, schema);
             }
@@ -125,11 +125,13 @@ union ${entity.name}ListResult =
                         .join(', ')})`
                     : ``;
                 const queryOneParameters = entity.properties.filter((p) => p.name === 'id' || (p.isReference && p.isUnique && !p.isNullable));
-                const queryOneParameter = queryOneParameters.length > 1
-                    ? `${queryOneParameters.map((p) => `${p.name}: ID`).join(', ')}`
-                    : `${queryOneParameters[0].name}: ID!`;
-                return `  ${this.uncapitalize(entity.name)}(${queryOneParameter}): ${entity.name}Result!
-  ${this.uncapitalize(entity.name)}List${queryListParameter}: ${entity.name}ListResult!`;
+                return `${queryOneParameters.length === 0
+                    ? ''
+                    : queryOneParameters.length === 1
+                        ? `  ${this.uncapitalize(entity.name)}(${queryOneParameters[0].name}: ID!): ${entity.name}Result!\n`
+                        : `  ${this.uncapitalize(entity.name)}(${queryOneParameters
+                            .map((p) => `${p.name}: ID`)
+                            .join(', ')}): ${entity.name}Result!\n`}  ${this.uncapitalize(entity.name)}List${queryListParameter}: ${entity.name}ListResult!`;
             });
             const query = `${resultTypes.join(`\n`)}
 type Query {
