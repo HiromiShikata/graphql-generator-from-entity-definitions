@@ -87,7 +87,7 @@ ${this.generateMutation(
                         relatedEntity.name
                       }`
                     : this.uncapitalize(relatedEntity.name)
-                }List: [${relatedEntity.name}ListResult!]!`,
+                }List: ${relatedEntity.name}ListResult!`,
           ),
       );
 
