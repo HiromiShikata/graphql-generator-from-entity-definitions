@@ -24,10 +24,8 @@ jobs:
       - run: git switch -c main
       - name: Semantic Release Dry Run
         id: semantic
-        env:
-          BRANCH_NAME: ${{ github.head_ref }}
         run: |
-          RELEASE_NOTES=$(npx semantic-release --branches $BRANCH_NAME --dry-run | grep "release notes:" -A3)
+          RELEASE_NOTES=$(npx semantic-release --dry-run | grep "release notes:" -A3)
           echo "::set-output name=notes::$RELEASE_NOTES"
 
       - name: Comment PR
