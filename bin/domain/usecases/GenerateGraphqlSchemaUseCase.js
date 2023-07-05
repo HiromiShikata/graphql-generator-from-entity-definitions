@@ -31,7 +31,7 @@ ${this.generateMutation(entityDefinitions, ignorePropertyNamesForCreation, ignor
                         ? `String${property.isNullable ? '' : '!'}`
                         : name === 'id'
                             ? 'ID!'
-                            : this.mapToGraphQLType(property.propertyType) +
+                            : this.mapToGraphQLType(entity, property) +
                                 (property.isNullable ? '' : '!');
                     properties.push(`  ${name}: ${type}`);
                     if (property.isReference) {
@@ -178,7 +178,8 @@ ${errorTypes.join('\n')}`;
                         return '  id: ID!';
                     }
                     else {
-                        return (`  ${property.name}: ${this.mapToGraphQLType(property.propertyType)}` + (property.isNullable ? '' : '!'));
+                        return (`  ${property.name}: ${this.mapToGraphQLType(entity, property)}` +
+                            (property.isNullable ? '' : '!'));
                     }
                 };
                 const propertiesForCreation = entity.properties
@@ -282,7 +283,11 @@ ${mutations.join('\n')}
 }`;
             return mutation;
         };
-        this.mapToGraphQLType = (propertyType) => {
+        this.mapToGraphQLType = (entity, property) => {
+            if (property.acceptableValues && property.acceptableValues.length > 0) {
+                return `${entity.name}${this.stringConvertor.pascalCase(property.name)}Type`;
+            }
+            const propertyType = property.propertyType;
             switch (propertyType) {
                 case 'boolean':
                     return 'Boolean';
