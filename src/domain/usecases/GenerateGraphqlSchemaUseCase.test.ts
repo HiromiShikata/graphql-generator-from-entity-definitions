@@ -331,13 +331,13 @@ type User {
   updatedAt: Date!
   updatedUserId: String
   updatedUser: UserResult!
-  createdUserUserList: [UserListResult!]!
-  updatedUserUserList: [UserListResult!]!
-  createdUserGroupList: [GroupListResult!]!
-  userGroupList: [UserGroupListResult!]!
+  createdUserUserList: UserListResult!
+  updatedUserUserList: UserListResult!
+  createdUserGroupList: GroupListResult!
+  userGroupList: UserGroupListResult!
   userProfile: UserProfile
   userPreference: UserPreference
-  userBookList: [UserBookListResult!]!
+  userBookList: UserBookListResult!
 }
 enum UserGenderType {
   MALE
@@ -350,7 +350,7 @@ type Group {
   name: String!
   createdUserId: String
   createdUser: UserResult!
-  userGroupList: [UserGroupListResult!]!
+  userGroupList: UserGroupListResult!
 }
 
 type UserGroup {
@@ -377,7 +377,7 @@ type UserPreference {
 type Book {
   id: ID!
   title: String!
-  userBookList: [UserBookListResult!]!
+  userBookList: UserBookListResult!
 }
 
 type UserBook {
@@ -1415,13 +1415,13 @@ type User {
   updatedAt: Date!
   updatedUserId: String
   updatedUser: UserResult!
-  createdUserUserList: [UserListResult!]!
-  updatedUserUserList: [UserListResult!]!
-  createdUserGroupList: [GroupListResult!]!
-  userGroupList: [UserGroupListResult!]!
+  createdUserUserList: UserListResult!
+  updatedUserUserList: UserListResult!
+  createdUserGroupList: GroupListResult!
+  userGroupList: UserGroupListResult!
   userProfile: UserProfile
   userPreference: UserPreference
-  userBookList: [UserBookListResult!]!
+  userBookList: UserBookListResult!
 }
 enum UserGenderType {
   MALE
@@ -1434,7 +1434,7 @@ type Group {
   name: String!
   createdUserId: String
   createdUser: UserResult!
-  userGroupList: [UserGroupListResult!]!
+  userGroupList: UserGroupListResult!
 }
 
 type UserGroup {
@@ -1461,7 +1461,7 @@ type UserPreference {
 type Book {
   id: ID!
   title: String!
-  userBookList: [UserBookListResult!]!
+  userBookList: UserBookListResult!
 }
 
 type UserBook {

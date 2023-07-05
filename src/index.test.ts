@@ -52,7 +52,7 @@ type User {
   createdUserId: String
   createdUser: UserResult!
   gender: UserGenderType!
-  createdUserUserList: [UserListResult!]!
+  createdUserUserList: UserListResult!
 }
 enum UserGenderType {
   EMPTY
