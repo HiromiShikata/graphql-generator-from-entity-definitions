@@ -46,7 +46,7 @@ ${this.generateMutation(entityDefinitions, ignorePropertyNamesForCreation, ignor
                     : `  ${relatedProperty.name.replace(/Id$/, '') !==
                         this.stringConvertor.camelCase(entity.name)
                         ? `${relatedProperty.name.replace(/Id$/, '')}${relatedEntity.name}`
-                        : this.uncapitalize(relatedEntity.name)}List: [${relatedEntity.name}ListResult!]!`));
+                        : this.uncapitalize(relatedEntity.name)}List: ${relatedEntity.name}ListResult!`));
                 typeDefs.push(`type ${entity.name} {
 ${properties.join('\n')}${relatedEntities.length > 0 ? '\n' + relatedEntities.join('\n') : ``}
 }
