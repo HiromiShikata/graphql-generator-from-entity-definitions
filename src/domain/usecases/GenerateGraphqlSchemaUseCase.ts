@@ -190,7 +190,7 @@ union ${entity.name}ListResult =
     }
 
     const queryMethods = entityDefinitions.map((entity) => {
-      const queryListParameter = entity.properties.find((p) => p.isReference)
+      const queryListParameter = entity.properties.find((p) => p.isReference && !p.isUnique)
         ? `(${entity.properties
             .filter(
               (p): p is EntityPropertyDefinitionReferencedObject =>

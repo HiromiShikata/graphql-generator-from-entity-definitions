@@ -535,9 +535,9 @@ type Query {
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: ID, groupId: ID): UserGroupListResult!
   userProfile(id: ID, userId: ID): UserProfileResult!
-  userProfileList(): UserProfileListResult!
+  userProfileList: UserProfileListResult!
   userPreference(userId: ID!): UserPreferenceResult!
-  userPreferenceList(): UserPreferenceListResult!
+  userPreferenceList: UserPreferenceListResult!
   book(id: ID!): BookResult!
   bookList: BookListResult!
   userBookList(userId: ID, bookId: ID): UserBookListResult!
@@ -1722,9 +1722,9 @@ type Query {
   userGroup(id: ID!): UserGroupResult!
   userGroupList(userId: ID, groupId: ID): UserGroupListResult!
   userProfile(id: ID, userId: ID): UserProfileResult!
-  userProfileList(): UserProfileListResult!
+  userProfileList: UserProfileListResult!
   userPreference(userId: ID!): UserPreferenceResult!
-  userPreferenceList(): UserPreferenceListResult!
+  userPreferenceList: UserPreferenceListResult!
   book(id: ID!): BookResult!
   bookList: BookListResult!
   userBookList(userId: ID, bookId: ID): UserBookListResult!
