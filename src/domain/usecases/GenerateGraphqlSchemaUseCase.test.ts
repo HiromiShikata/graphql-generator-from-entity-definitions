@@ -6,226 +6,226 @@ import { EntityDefinition } from '../entities/EntityDefinition';
 import { camelCase, paramCase, pascalCase, snakeCase } from 'change-case-all';
 import { StringConvertor } from './adapter-interfaces/StringConvertor';
 
-const ignorePropertyNamesForCreation: string[] = [
-  'id',
-  'createdAt',
-  'updatedAt',
-  'createdUserId',
-  'updatedUserId',
-];
-const ignorePropertyNamesForUpdate: string[] = [
-  'createdAt',
-  'updatedAt',
-  'createdUserId',
-  'updatedUserId',
-];
-const entityDefinitions: EntityDefinition[] = [
-  {
-    name: 'User',
-    properties: [
-      {
-        name: 'id',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'name',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'gender',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: ['Male', 'Female', 'Other', ''],
-      },
-      {
-        name: 'pet',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: true,
-        acceptableValues: null,
-      },
-      {
-        name: 'deactivated',
-        propertyType: 'boolean',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'createdAt',
-        propertyType: 'Date',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'createdUserId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: false,
-        isNullable: true,
-      },
-      {
-        name: 'updatedAt',
-        propertyType: 'Date',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'updatedUserId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: false,
-        isNullable: true,
-      },
-    ],
-  },
-  {
-    name: 'Group',
-    properties: [
-      {
-        name: 'id',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'name',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'createdUserId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: false,
-        isNullable: true,
-      },
-    ],
-  },
-  {
-    name: 'UserGroup',
-    properties: [
-      {
-        name: 'id',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'userId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: false,
-        isNullable: false,
-      },
-      {
-        name: 'groupId',
-        targetEntityDefinitionName: 'Group',
-        isReference: true,
-        isUnique: false,
-        isNullable: false,
-      },
-    ],
-  },
-  {
-    name: 'UserProfile',
-    properties: [
-      {
-        name: 'id',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'userId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: true,
-        isNullable: false,
-      },
-      {
-        name: 'nickname',
-        isReference: false,
-        propertyType: 'string',
-        isNullable: false,
-        acceptableValues: null,
-      },
-    ],
-  },
-  {
-    name: 'UserPreference',
-    properties: [
-      {
-        name: 'userId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: true,
-        isNullable: false,
-      },
-      {
-        name: 'themeColor',
-        isReference: false,
-        propertyType: 'string',
-        isNullable: false,
-        acceptableValues: null,
-      },
-    ],
-  },
-  {
-    name: 'Book',
-    properties: [
-      {
-        name: 'id',
-        propertyType: 'string',
-        isReference: false,
-        isNullable: false,
-        acceptableValues: null,
-      },
-      {
-        name: 'title',
-        isReference: false,
-        propertyType: 'string',
-        isNullable: false,
-        acceptableValues: null,
-      },
-    ],
-  },
-  {
-    name: 'UserBook',
-    properties: [
-      {
-        name: 'userId',
-        targetEntityDefinitionName: 'User',
-        isReference: true,
-        isUnique: false,
-        isNullable: false,
-      },
-      {
-        name: 'bookId',
-        targetEntityDefinitionName: 'Book',
-        isReference: true,
-        isUnique: false,
-        isNullable: false,
-      },
-    ],
-  },
-];
-
 describe('GenerateGraphqlSchemaUseCase', () => {
+  const ignorePropertyNamesForCreation: string[] = [
+    'id',
+    'createdAt',
+    'updatedAt',
+    'createdUserId',
+    'updatedUserId',
+  ];
+  const ignorePropertyNamesForUpdate: string[] = [
+    'createdAt',
+    'updatedAt',
+    'createdUserId',
+    'updatedUserId',
+  ];
+  const entityDefinitions: EntityDefinition[] = [
+    {
+      name: 'User',
+      properties: [
+        {
+          name: 'id',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'name',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'gender',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: ['Male', 'Female', 'Other', ''],
+        },
+        {
+          name: 'pet',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: true,
+          acceptableValues: null,
+        },
+        {
+          name: 'deactivated',
+          propertyType: 'boolean',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'createdAt',
+          propertyType: 'Date',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'createdUserId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: false,
+          isNullable: true,
+        },
+        {
+          name: 'updatedAt',
+          propertyType: 'Date',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'updatedUserId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: false,
+          isNullable: true,
+        },
+      ],
+    },
+    {
+      name: 'Group',
+      properties: [
+        {
+          name: 'id',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'name',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'createdUserId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: false,
+          isNullable: true,
+        },
+      ],
+    },
+    {
+      name: 'UserGroup',
+      properties: [
+        {
+          name: 'id',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'userId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: false,
+          isNullable: false,
+        },
+        {
+          name: 'groupId',
+          targetEntityDefinitionName: 'Group',
+          isReference: true,
+          isUnique: false,
+          isNullable: false,
+        },
+      ],
+    },
+    {
+      name: 'UserProfile',
+      properties: [
+        {
+          name: 'id',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'userId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: true,
+          isNullable: false,
+        },
+        {
+          name: 'nickname',
+          isReference: false,
+          propertyType: 'string',
+          isNullable: false,
+          acceptableValues: null,
+        },
+      ],
+    },
+    {
+      name: 'UserPreference',
+      properties: [
+        {
+          name: 'userId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: true,
+          isNullable: false,
+        },
+        {
+          name: 'themeColor',
+          isReference: false,
+          propertyType: 'string',
+          isNullable: false,
+          acceptableValues: null,
+        },
+      ],
+    },
+    {
+      name: 'Book',
+      properties: [
+        {
+          name: 'id',
+          propertyType: 'string',
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        },
+        {
+          name: 'title',
+          isReference: false,
+          propertyType: 'string',
+          isNullable: false,
+          acceptableValues: null,
+        },
+      ],
+    },
+    {
+      name: 'UserBook',
+      properties: [
+        {
+          name: 'userId',
+          targetEntityDefinitionName: 'User',
+          isReference: true,
+          isUnique: false,
+          isNullable: false,
+        },
+        {
+          name: 'bookId',
+          targetEntityDefinitionName: 'Book',
+          isReference: true,
+          isUnique: false,
+          isNullable: false,
+        },
+      ],
+    },
+  ];
+
   describe('run', () => {
     it('should generate and save graphql schema file', async () => {
       const { entityDefinitionRepository, fileRepository, useCase } =
