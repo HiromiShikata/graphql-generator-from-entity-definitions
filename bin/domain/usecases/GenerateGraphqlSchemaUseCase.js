@@ -118,7 +118,7 @@ union ${entity.name}ListResult =
                 resultTypes.push(resultType);
             }
             const queryMethods = entityDefinitions.map((entity) => {
-                const queryListParameter = entity.properties.find((p) => p.isReference)
+                const queryListParameter = entity.properties.find((p) => p.isReference && !p.isUnique)
                     ? `(${entity.properties
                         .filter((p) => p.isReference && !p.isUnique)
                         .map((p) => `${p.name}: ID`)
