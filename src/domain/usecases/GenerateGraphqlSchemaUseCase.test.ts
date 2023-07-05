@@ -5,6 +5,7 @@ import { EntityDefinitionRepository } from './adapter-interfaces/EntityRelationD
 import { EntityDefinition } from '../entities/EntityDefinition';
 import { camelCase, paramCase, pascalCase, snakeCase } from 'change-case-all';
 import { StringConvertor } from './adapter-interfaces/StringConvertor';
+import { EntityPropertyDefinitionPrimitive } from '../entities/EntityPropertyDefinition';
 
 describe('GenerateGraphqlSchemaUseCase', () => {
   const ignorePropertyNamesForCreation: string[] = [
@@ -321,7 +322,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   createdAt: Date!
@@ -545,7 +546,7 @@ type Query {
 
 input CreateUserInput {
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -566,7 +567,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -977,7 +978,7 @@ type Mutation {
       const expectedMutation = `
 input CreateUserInput {
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -998,7 +999,7 @@ union CreateUserPayloadResult =
 input UpdateUserInput {
   id: ID!
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   clientMutationId: ID
@@ -1405,7 +1406,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
-  gender: String!
+  gender: UserGenderType!
   pet: String
   deactivated: Boolean!
   createdAt: Date!
@@ -1740,26 +1741,53 @@ type Query {
   });
 
   describe('mapToGraphQLType', () => {
-    it('should map "boolean" to "Boolean"', () => {
-      const { useCase } = createUseCaseAndMockRepositories();
-      expect(useCase.mapToGraphQLType('boolean')).toEqual('Boolean');
-    });
+    const entity = {
+      name: 'User',
+      properties: [],
+    };
 
-    it('should map "number" to "Int"', () => {
-      const { useCase } = createUseCaseAndMockRepositories();
-      expect(useCase.mapToGraphQLType('number')).toEqual('Int');
-    });
+    it.each`
+      propertyType | expected
+      ${'boolean'} | ${'Boolean'}
+      ${'number'}  | ${'Int'}
+      ${'string'}  | ${'String'}
+      ${'Date'}    | ${'Date'}
+    `(
+      'maps $propertyType to $expected',
+      ({
+        propertyType,
+        expected,
+      }: {
+        propertyType: EntityPropertyDefinitionPrimitive['propertyType'];
+        expected: string;
+      }) => {
+        const property: EntityPropertyDefinitionPrimitive = {
+          name: 'test',
+          propertyType: propertyType,
+          isReference: false,
+          isNullable: false,
+          acceptableValues: null,
+        };
+        const { useCase } = createUseCaseAndMockRepositories();
+        expect(useCase.mapToGraphQLType(entity, property)).toEqual(expected);
+      },
+    );
 
-    it('should map "string" to "String"', () => {
+    it('maps type with acceptableValues to custom type', () => {
+      const property: EntityPropertyDefinitionPrimitive = {
+        name: 'gender',
+        propertyType: 'string',
+        isReference: false,
+        isNullable: false,
+        acceptableValues: ['Male', 'Female', 'Other', ''],
+      };
       const { useCase } = createUseCaseAndMockRepositories();
-      expect(useCase.mapToGraphQLType('string')).toEqual('String');
-    });
-
-    it('should map "Date" to "Date"', () => {
-      const { useCase } = createUseCaseAndMockRepositories();
-      expect(useCase.mapToGraphQLType('Date')).toEqual('Date');
+      expect(useCase.mapToGraphQLType(entity, property)).toEqual(
+        'UserGenderType',
+      );
     });
   });
+
   describe('capitalize', () => {
     it('should capitalize the first letter of a non-empty string', () => {
       const { useCase } = createUseCaseAndMockRepositories();

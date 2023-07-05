@@ -51,7 +51,7 @@ type User {
   createdAt: Date!
   createdUserId: String
   createdUser: UserResult!
-  gender: String!
+  gender: UserGenderType!
   createdUserUserList: [UserListResult!]!
 }
 enum UserGenderType {
@@ -87,7 +87,7 @@ type Query {
 input CreateUserInput {
   name: String!
   pet: String
-  gender: String!
+  gender: UserGenderType!
   clientMutationId: ID
 }
 
@@ -107,7 +107,7 @@ input UpdateUserInput {
   id: ID!
   name: String!
   pet: String
-  gender: String!
+  gender: UserGenderType!
   clientMutationId: ID
 }
 
