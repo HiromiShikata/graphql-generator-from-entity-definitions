@@ -85,8 +85,7 @@ ${p.acceptableValues
                     .filter((p) => p.isReference)
                     .reduce((prev, curr) => {
                     if (curr.targetEntityDefinitionName === entity.name ||
-                        prev.find((p) => p.targetEntityDefinitionName ===
-                            curr.targetEntityDefinitionName)) {
+                        prev.find((p) => p.targetEntityDefinitionName === curr.targetEntityDefinitionName)) {
                         return prev;
                     }
                     return [...prev, curr];
