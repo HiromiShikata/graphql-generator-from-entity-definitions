@@ -140,24 +140,21 @@ ${p.acceptableValues
   | ErrorPermissionDenied
   | ErrorUnknownRuntime
   | Error${entity.name}NotFound${entity.properties
-        .filter(
-          (p): p is EntityPropertyDefinitionReferencedObject => p.isReference,
+    .filter((p): p is EntityPropertyDefinitionReferencedObject => p.isReference)
+    .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
+      if (
+        curr.targetEntityDefinitionName === entity.name ||
+        prev.find(
+          (p) =>
+            p.targetEntityDefinitionName === curr.targetEntityDefinitionName,
         )
-        .reduce((prev: EntityPropertyDefinitionReferencedObject[], curr) => {
-          if (
-            curr.targetEntityDefinitionName === entity.name ||
-            prev.find(
-              (p) =>
-                p.targetEntityDefinitionName ===
-                curr.targetEntityDefinitionName,
-            )
-          ) {
-            return prev;
-          }
-          return [...prev, curr];
-        }, [])
-        .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
-        .join('')}
+      ) {
+        return prev;
+      }
+      return [...prev, curr];
+    }, [])
+    .map((p) => `\n  | Error${p.targetEntityDefinitionName}NotFound`)
+    .join('')}
 
 type ${entity.name}List {
   itemList: [${entity.name}!]!
