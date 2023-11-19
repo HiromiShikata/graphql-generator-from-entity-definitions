@@ -53,9 +53,9 @@ ${this.generateMutation(
         const type = property.isReference
           ? `String${property.isNullable ? '' : '!'}`
           : name === 'id'
-          ? 'ID!'
-          : this.mapToGraphQLType(entity, property) +
-            (property.isNullable ? '' : '!');
+            ? 'ID!'
+            : this.mapToGraphQLType(entity, property) +
+              (property.isNullable ? '' : '!');
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
           properties.push(
@@ -206,12 +206,12 @@ union ${entity.name}ListResult =
         queryOneParameters.length === 0
           ? ''
           : queryOneParameters.length === 1
-          ? `  ${this.uncapitalize(entity.name)}(${
-              queryOneParameters[0].name
-            }: ID!): ${entity.name}Result!\n`
-          : `  ${this.uncapitalize(entity.name)}(${queryOneParameters
-              .map((p) => `${p.name}: ID`)
-              .join(', ')}): ${entity.name}Result!\n`
+            ? `  ${this.uncapitalize(entity.name)}(${
+                queryOneParameters[0].name
+              }: ID!): ${entity.name}Result!\n`
+            : `  ${this.uncapitalize(entity.name)}(${queryOneParameters
+                .map((p) => `${p.name}: ID`)
+                .join(', ')}): ${entity.name}Result!\n`
       }  ${this.uncapitalize(entity.name)}List${queryListParameter}: ${
         entity.name
       }ListResult!`;
