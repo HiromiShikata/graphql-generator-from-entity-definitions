@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: cimg/node:21.1.0
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm ci
+      - name: Format and Check
+        run: npm run fmt && git --no-pager diff && exit $(git diff | wc -l)
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm run test
+      - name: Store Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: reports/jest-junit
+      - name: Store Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: reports
