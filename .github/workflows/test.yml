@@ -19,12 +19,12 @@ jobs:
       - name: Test
         run: npm run test
       - name: Store Test Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: reports/jest-junit
       - name: Store Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: reports
