@@ -329,7 +329,7 @@ type UserLessonStepStatus {
 }
 
 union AdministratorResult =
-    Administrator
+  | Administrator
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -340,13 +340,13 @@ type AdministratorList {
 }
 
 union AdministratorListResult =
-    AdministratorList
+  | AdministratorList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union ClasslinkTenantCredentialResult =
-    ClasslinkTenantCredential
+  | ClasslinkTenantCredential
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -357,13 +357,13 @@ type ClasslinkTenantCredentialList {
 }
 
 union ClasslinkTenantCredentialListResult =
-    ClasslinkTenantCredentialList
+  | ClasslinkTenantCredentialList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CodeillusionPackageChapterDefinitionResult =
-    CodeillusionPackageChapterDefinition
+  | CodeillusionPackageChapterDefinition
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -374,13 +374,13 @@ type CodeillusionPackageChapterDefinitionList {
 }
 
 union CodeillusionPackageChapterDefinitionListResult =
-    CodeillusionPackageChapterDefinitionList
+  | CodeillusionPackageChapterDefinitionList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CodeillusionPackageCircleDefinitionResult =
-    CodeillusionPackageCircleDefinition
+  | CodeillusionPackageCircleDefinition
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -391,13 +391,13 @@ type CodeillusionPackageCircleDefinitionList {
 }
 
 union CodeillusionPackageCircleDefinitionListResult =
-    CodeillusionPackageCircleDefinitionList
+  | CodeillusionPackageCircleDefinitionList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CodeillusionPackageLessonDefinitionResult =
-    CodeillusionPackageLessonDefinition
+  | CodeillusionPackageLessonDefinition
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -408,13 +408,13 @@ type CodeillusionPackageLessonDefinitionList {
 }
 
 union CodeillusionPackageLessonDefinitionListResult =
-    CodeillusionPackageLessonDefinitionList
+  | CodeillusionPackageLessonDefinitionList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CsePackageLessonDefinitionResult =
-    CsePackageLessonDefinition
+  | CsePackageLessonDefinition
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -425,13 +425,13 @@ type CsePackageLessonDefinitionList {
 }
 
 union CsePackageLessonDefinitionListResult =
-    CsePackageLessonDefinitionList
+  | CsePackageLessonDefinitionList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CsePackageUnitDefinitionResult =
-    CsePackageUnitDefinition
+  | CsePackageUnitDefinition
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -442,13 +442,13 @@ type CsePackageUnitDefinitionList {
 }
 
 union CsePackageUnitDefinitionListResult =
-    CsePackageUnitDefinitionList
+  | CsePackageUnitDefinitionList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CurriculumBrandResult =
-    CurriculumBrand
+  | CurriculumBrand
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -459,13 +459,13 @@ type CurriculumBrandList {
 }
 
 union CurriculumBrandListResult =
-    CurriculumBrandList
+  | CurriculumBrandList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CurriculumPackageResult =
-    CurriculumPackage
+  | CurriculumPackage
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -476,13 +476,13 @@ type CurriculumPackageList {
 }
 
 union CurriculumPackageListResult =
-    CurriculumPackageList
+  | CurriculumPackageList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union CurriculumPackageLessonConfigurationResult =
-    CurriculumPackageLessonConfiguration
+  | CurriculumPackageLessonConfiguration
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -493,13 +493,13 @@ type CurriculumPackageLessonConfigurationList {
 }
 
 union CurriculumPackageLessonConfigurationListResult =
-    CurriculumPackageLessonConfigurationList
+  | CurriculumPackageLessonConfigurationList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union DistrictResult =
-    District
+  | District
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -510,13 +510,13 @@ type DistrictList {
 }
 
 union DistrictListResult =
-    DistrictList
+  | DistrictList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union DistrictPurchasedPackageResult =
-    DistrictPurchasedPackage
+  | DistrictPurchasedPackage
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -527,13 +527,13 @@ type DistrictPurchasedPackageList {
 }
 
 union DistrictPurchasedPackageListResult =
-    DistrictPurchasedPackageList
+  | DistrictPurchasedPackageList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union DistrictRosterSyncStatusResult =
-    DistrictRosterSyncStatus
+  | DistrictRosterSyncStatus
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -544,13 +544,13 @@ type DistrictRosterSyncStatusList {
 }
 
 union DistrictRosterSyncStatusListResult =
-    DistrictRosterSyncStatusList
+  | DistrictRosterSyncStatusList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union HumanUserResult =
-    HumanUser
+  | HumanUser
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -561,13 +561,13 @@ type HumanUserList {
 }
 
 union HumanUserListResult =
-    HumanUserList
+  | HumanUserList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union InternalOperatorResult =
-    InternalOperator
+  | InternalOperator
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -578,13 +578,13 @@ type InternalOperatorList {
 }
 
 union InternalOperatorListResult =
-    InternalOperatorList
+  | InternalOperatorList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union LessonResult =
-    Lesson
+  | Lesson
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -595,13 +595,13 @@ type LessonList {
 }
 
 union LessonListResult =
-    LessonList
+  | LessonList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union LessonHintResult =
-    LessonHint
+  | LessonHint
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -612,13 +612,13 @@ type LessonHintList {
 }
 
 union LessonHintListResult =
-    LessonHintList
+  | LessonHintList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union LessonQuizResult =
-    LessonQuiz
+  | LessonQuiz
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -629,13 +629,13 @@ type LessonQuizList {
 }
 
 union LessonQuizListResult =
-    LessonQuizList
+  | LessonQuizList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union LessonStepResult =
-    LessonStep
+  | LessonStep
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -646,13 +646,13 @@ type LessonStepList {
 }
 
 union LessonStepListResult =
-    LessonStepList
+  | LessonStepList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union LmsResult =
-    Lms
+  | Lms
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -663,13 +663,13 @@ type LmsList {
 }
 
 union LmsListResult =
-    LmsList
+  | LmsList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union OrganizationResult =
-    Organization
+  | Organization
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -680,13 +680,13 @@ type OrganizationList {
 }
 
 union OrganizationListResult =
-    OrganizationList
+  | OrganizationList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union StudentResult =
-    Student
+  | Student
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -697,13 +697,13 @@ type StudentList {
 }
 
 union StudentListResult =
-    StudentList
+  | StudentList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union StudentGroupResult =
-    StudentGroup
+  | StudentGroup
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -714,13 +714,13 @@ type StudentGroupList {
 }
 
 union StudentGroupListResult =
-    StudentGroupList
+  | StudentGroupList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union StudentGroupPackageAssignmentResult =
-    StudentGroupPackageAssignment
+  | StudentGroupPackageAssignment
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -731,13 +731,13 @@ type StudentGroupPackageAssignmentList {
 }
 
 union StudentGroupPackageAssignmentListResult =
-    StudentGroupPackageAssignmentList
+  | StudentGroupPackageAssignmentList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union StudentStudentGroupAffiliationResult =
-    StudentStudentGroupAffiliation
+  | StudentStudentGroupAffiliation
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -748,13 +748,13 @@ type StudentStudentGroupAffiliationList {
 }
 
 union StudentStudentGroupAffiliationListResult =
-    StudentStudentGroupAffiliationList
+  | StudentStudentGroupAffiliationList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union TeacherResult =
-    Teacher
+  | Teacher
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -765,13 +765,13 @@ type TeacherList {
 }
 
 union TeacherListResult =
-    TeacherList
+  | TeacherList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union TeacherOrganizationResult =
-    TeacherOrganization
+  | TeacherOrganization
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -782,13 +782,13 @@ type TeacherOrganizationList {
 }
 
 union TeacherOrganizationListResult =
-    TeacherOrganizationList
+  | TeacherOrganizationList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union TeacherOrganizationAffiliationResult =
-    TeacherOrganizationAffiliation
+  | TeacherOrganizationAffiliation
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -799,13 +799,13 @@ type TeacherOrganizationAffiliationList {
 }
 
 union TeacherOrganizationAffiliationListResult =
-    TeacherOrganizationAffiliationList
+  | TeacherOrganizationAffiliationList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union UserResult =
-    User
+  | User
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -816,13 +816,13 @@ type UserList {
 }
 
 union UserListResult =
-    UserList
+  | UserList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union UserLessonHintStatusResult =
-    UserLessonHintStatus
+  | UserLessonHintStatus
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -833,13 +833,13 @@ type UserLessonHintStatusList {
 }
 
 union UserLessonHintStatusListResult =
-    UserLessonHintStatusList
+  | UserLessonHintStatusList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union UserLessonQuizStatusResult =
-    UserLessonQuizStatus
+  | UserLessonQuizStatus
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -850,13 +850,13 @@ type UserLessonQuizStatusList {
 }
 
 union UserLessonQuizStatusListResult =
-    UserLessonQuizStatusList
+  | UserLessonQuizStatusList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union UserLessonStatusResult =
-    UserLessonStatus
+  | UserLessonStatus
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -867,13 +867,13 @@ type UserLessonStatusList {
 }
 
 union UserLessonStatusListResult =
-    UserLessonStatusList
+  | UserLessonStatusList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
 
 union UserLessonStepStatusResult =
-    UserLessonStepStatus
+  | UserLessonStepStatus
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -884,7 +884,7 @@ type UserLessonStepStatusList {
 }
 
 union UserLessonStepStatusListResult =
-    UserLessonStepStatusList
+  | UserLessonStepStatusList
   | NotFoundError
   | PermissionDeniedError
   | UnknownRuntimeError
@@ -992,7 +992,7 @@ type CreateAdministratorPayload {
 }
 
 union CreateAdministratorPayloadResult =
-    CreateAdministratorPayload
+  | CreateAdministratorPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1016,7 +1016,7 @@ type UpdateAdministratorPayload {
 }
 
 union UpdateAdministratorPayloadResult =
-    UpdateAdministratorPayload
+  | UpdateAdministratorPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1032,7 +1032,7 @@ type DeleteAdministratorPayload {
 }
 
 union DeleteAdministratorPayloadResult =
-    DeleteAdministratorPayload
+  | DeleteAdministratorPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1051,7 +1051,7 @@ type CreateClasslinkTenantCredentialPayload {
 }
 
 union CreateClasslinkTenantCredentialPayloadResult =
-    CreateClasslinkTenantCredentialPayload
+  | CreateClasslinkTenantCredentialPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1070,7 +1070,7 @@ type UpdateClasslinkTenantCredentialPayload {
 }
 
 union UpdateClasslinkTenantCredentialPayloadResult =
-    UpdateClasslinkTenantCredentialPayload
+  | UpdateClasslinkTenantCredentialPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1086,7 +1086,7 @@ type DeleteClasslinkTenantCredentialPayload {
 }
 
 union DeleteClasslinkTenantCredentialPayloadResult =
-    DeleteClasslinkTenantCredentialPayload
+  | DeleteClasslinkTenantCredentialPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1105,7 +1105,7 @@ type CreateCodeillusionPackageChapterDefinitionPayload {
 }
 
 union CreateCodeillusionPackageChapterDefinitionPayloadResult =
-    CreateCodeillusionPackageChapterDefinitionPayload
+  | CreateCodeillusionPackageChapterDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1124,7 +1124,7 @@ type UpdateCodeillusionPackageChapterDefinitionPayload {
 }
 
 union UpdateCodeillusionPackageChapterDefinitionPayloadResult =
-    UpdateCodeillusionPackageChapterDefinitionPayload
+  | UpdateCodeillusionPackageChapterDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1140,7 +1140,7 @@ type DeleteCodeillusionPackageChapterDefinitionPayload {
 }
 
 union DeleteCodeillusionPackageChapterDefinitionPayloadResult =
-    DeleteCodeillusionPackageChapterDefinitionPayload
+  | DeleteCodeillusionPackageChapterDefinitionPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1161,7 +1161,7 @@ type CreateCodeillusionPackageCircleDefinitionPayload {
 }
 
 union CreateCodeillusionPackageCircleDefinitionPayloadResult =
-    CreateCodeillusionPackageCircleDefinitionPayload
+  | CreateCodeillusionPackageCircleDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1183,7 +1183,7 @@ type UpdateCodeillusionPackageCircleDefinitionPayload {
 }
 
 union UpdateCodeillusionPackageCircleDefinitionPayloadResult =
-    UpdateCodeillusionPackageCircleDefinitionPayload
+  | UpdateCodeillusionPackageCircleDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1199,7 +1199,7 @@ type DeleteCodeillusionPackageCircleDefinitionPayload {
 }
 
 union DeleteCodeillusionPackageCircleDefinitionPayloadResult =
-    DeleteCodeillusionPackageCircleDefinitionPayload
+  | DeleteCodeillusionPackageCircleDefinitionPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1217,7 +1217,7 @@ type CreateCodeillusionPackageLessonDefinitionPayload {
 }
 
 union CreateCodeillusionPackageLessonDefinitionPayloadResult =
-    CreateCodeillusionPackageLessonDefinitionPayload
+  | CreateCodeillusionPackageLessonDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1235,7 +1235,7 @@ type UpdateCodeillusionPackageLessonDefinitionPayload {
 }
 
 union UpdateCodeillusionPackageLessonDefinitionPayloadResult =
-    UpdateCodeillusionPackageLessonDefinitionPayload
+  | UpdateCodeillusionPackageLessonDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1251,7 +1251,7 @@ type DeleteCodeillusionPackageLessonDefinitionPayload {
 }
 
 union DeleteCodeillusionPackageLessonDefinitionPayloadResult =
-    DeleteCodeillusionPackageLessonDefinitionPayload
+  | DeleteCodeillusionPackageLessonDefinitionPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1269,7 +1269,7 @@ type CreateCsePackageLessonDefinitionPayload {
 }
 
 union CreateCsePackageLessonDefinitionPayloadResult =
-    CreateCsePackageLessonDefinitionPayload
+  | CreateCsePackageLessonDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1287,7 +1287,7 @@ type UpdateCsePackageLessonDefinitionPayload {
 }
 
 union UpdateCsePackageLessonDefinitionPayloadResult =
-    UpdateCsePackageLessonDefinitionPayload
+  | UpdateCsePackageLessonDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1303,7 +1303,7 @@ type DeleteCsePackageLessonDefinitionPayload {
 }
 
 union DeleteCsePackageLessonDefinitionPayloadResult =
-    DeleteCsePackageLessonDefinitionPayload
+  | DeleteCsePackageLessonDefinitionPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1320,7 +1320,7 @@ type CreateCsePackageUnitDefinitionPayload {
 }
 
 union CreateCsePackageUnitDefinitionPayloadResult =
-    CreateCsePackageUnitDefinitionPayload
+  | CreateCsePackageUnitDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1337,7 +1337,7 @@ type UpdateCsePackageUnitDefinitionPayload {
 }
 
 union UpdateCsePackageUnitDefinitionPayloadResult =
-    UpdateCsePackageUnitDefinitionPayload
+  | UpdateCsePackageUnitDefinitionPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1353,7 +1353,7 @@ type DeleteCsePackageUnitDefinitionPayload {
 }
 
 union DeleteCsePackageUnitDefinitionPayloadResult =
-    DeleteCsePackageUnitDefinitionPayload
+  | DeleteCsePackageUnitDefinitionPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1369,7 +1369,7 @@ type CreateCurriculumBrandPayload {
 }
 
 union CreateCurriculumBrandPayloadResult =
-    CreateCurriculumBrandPayload
+  | CreateCurriculumBrandPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1385,7 +1385,7 @@ type UpdateCurriculumBrandPayload {
 }
 
 union UpdateCurriculumBrandPayloadResult =
-    UpdateCurriculumBrandPayload
+  | UpdateCurriculumBrandPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1401,7 +1401,7 @@ type DeleteCurriculumBrandPayload {
 }
 
 union DeleteCurriculumBrandPayloadResult =
-    DeleteCurriculumBrandPayload
+  | DeleteCurriculumBrandPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1419,7 +1419,7 @@ type CreateCurriculumPackagePayload {
 }
 
 union CreateCurriculumPackagePayloadResult =
-    CreateCurriculumPackagePayload
+  | CreateCurriculumPackagePayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1438,7 +1438,7 @@ type UpdateCurriculumPackagePayload {
 }
 
 union UpdateCurriculumPackagePayloadResult =
-    UpdateCurriculumPackagePayload
+  | UpdateCurriculumPackagePayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1454,7 +1454,7 @@ type DeleteCurriculumPackagePayload {
 }
 
 union DeleteCurriculumPackagePayloadResult =
-    DeleteCurriculumPackagePayload
+  | DeleteCurriculumPackagePayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1471,7 +1471,7 @@ type CreateCurriculumPackageLessonConfigurationPayload {
 }
 
 union CreateCurriculumPackageLessonConfigurationPayloadResult =
-    CreateCurriculumPackageLessonConfigurationPayload
+  | CreateCurriculumPackageLessonConfigurationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1489,7 +1489,7 @@ type UpdateCurriculumPackageLessonConfigurationPayload {
 }
 
 union UpdateCurriculumPackageLessonConfigurationPayloadResult =
-    UpdateCurriculumPackageLessonConfigurationPayload
+  | UpdateCurriculumPackageLessonConfigurationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1505,7 +1505,7 @@ type DeleteCurriculumPackageLessonConfigurationPayload {
 }
 
 union DeleteCurriculumPackageLessonConfigurationPayloadResult =
-    DeleteCurriculumPackageLessonConfigurationPayload
+  | DeleteCurriculumPackageLessonConfigurationPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1527,7 +1527,7 @@ type CreateDistrictPayload {
 }
 
 union CreateDistrictPayloadResult =
-    CreateDistrictPayload
+  | CreateDistrictPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1549,7 +1549,7 @@ type UpdateDistrictPayload {
 }
 
 union UpdateDistrictPayloadResult =
-    UpdateDistrictPayload
+  | UpdateDistrictPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1565,7 +1565,7 @@ type DeleteDistrictPayload {
 }
 
 union DeleteDistrictPayloadResult =
-    DeleteDistrictPayload
+  | DeleteDistrictPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1584,7 +1584,7 @@ type CreateDistrictPurchasedPackagePayload {
 }
 
 union CreateDistrictPurchasedPackagePayloadResult =
-    CreateDistrictPurchasedPackagePayload
+  | CreateDistrictPurchasedPackagePayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1603,7 +1603,7 @@ type UpdateDistrictPurchasedPackagePayload {
 }
 
 union UpdateDistrictPurchasedPackagePayloadResult =
-    UpdateDistrictPurchasedPackagePayload
+  | UpdateDistrictPurchasedPackagePayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1619,7 +1619,7 @@ type DeleteDistrictPurchasedPackagePayload {
 }
 
 union DeleteDistrictPurchasedPackagePayloadResult =
-    DeleteDistrictPurchasedPackagePayload
+  | DeleteDistrictPurchasedPackagePayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1638,7 +1638,7 @@ type CreateDistrictRosterSyncStatusPayload {
 }
 
 union CreateDistrictRosterSyncStatusPayloadResult =
-    CreateDistrictRosterSyncStatusPayload
+  | CreateDistrictRosterSyncStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1657,7 +1657,7 @@ type UpdateDistrictRosterSyncStatusPayload {
 }
 
 union UpdateDistrictRosterSyncStatusPayloadResult =
-    UpdateDistrictRosterSyncStatusPayload
+  | UpdateDistrictRosterSyncStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1673,7 +1673,7 @@ type DeleteDistrictRosterSyncStatusPayload {
 }
 
 union DeleteDistrictRosterSyncStatusPayloadResult =
-    DeleteDistrictRosterSyncStatusPayload
+  | DeleteDistrictRosterSyncStatusPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1694,7 +1694,7 @@ type CreateHumanUserPayload {
 }
 
 union CreateHumanUserPayloadResult =
-    CreateHumanUserPayload
+  | CreateHumanUserPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1715,7 +1715,7 @@ type UpdateHumanUserPayload {
 }
 
 union UpdateHumanUserPayloadResult =
-    UpdateHumanUserPayload
+  | UpdateHumanUserPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1731,7 +1731,7 @@ type DeleteHumanUserPayload {
 }
 
 union DeleteHumanUserPayloadResult =
-    DeleteHumanUserPayload
+  | DeleteHumanUserPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1748,7 +1748,7 @@ type CreateInternalOperatorPayload {
 }
 
 union CreateInternalOperatorPayloadResult =
-    CreateInternalOperatorPayload
+  | CreateInternalOperatorPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1765,7 +1765,7 @@ type UpdateInternalOperatorPayload {
 }
 
 union UpdateInternalOperatorPayloadResult =
-    UpdateInternalOperatorPayload
+  | UpdateInternalOperatorPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1781,7 +1781,7 @@ type DeleteInternalOperatorPayload {
 }
 
 union DeleteInternalOperatorPayloadResult =
-    DeleteInternalOperatorPayload
+  | DeleteInternalOperatorPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1812,7 +1812,7 @@ type CreateLessonPayload {
 }
 
 union CreateLessonPayloadResult =
-    CreateLessonPayload
+  | CreateLessonPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1843,7 +1843,7 @@ type UpdateLessonPayload {
 }
 
 union UpdateLessonPayloadResult =
-    UpdateLessonPayload
+  | UpdateLessonPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1859,7 +1859,7 @@ type DeleteLessonPayload {
 }
 
 union DeleteLessonPayloadResult =
-    DeleteLessonPayload
+  | DeleteLessonPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1879,7 +1879,7 @@ type CreateLessonHintPayload {
 }
 
 union CreateLessonHintPayloadResult =
-    CreateLessonHintPayload
+  | CreateLessonHintPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1899,7 +1899,7 @@ type UpdateLessonHintPayload {
 }
 
 union UpdateLessonHintPayloadResult =
-    UpdateLessonHintPayload
+  | UpdateLessonHintPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1915,7 +1915,7 @@ type DeleteLessonHintPayload {
 }
 
 union DeleteLessonHintPayloadResult =
-    DeleteLessonHintPayload
+  | DeleteLessonHintPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1935,7 +1935,7 @@ type CreateLessonQuizPayload {
 }
 
 union CreateLessonQuizPayloadResult =
-    CreateLessonQuizPayload
+  | CreateLessonQuizPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -1955,7 +1955,7 @@ type UpdateLessonQuizPayload {
 }
 
 union UpdateLessonQuizPayloadResult =
-    UpdateLessonQuizPayload
+  | UpdateLessonQuizPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -1971,7 +1971,7 @@ type DeleteLessonQuizPayload {
 }
 
 union DeleteLessonQuizPayloadResult =
-    DeleteLessonQuizPayload
+  | DeleteLessonQuizPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -1990,7 +1990,7 @@ type CreateLessonStepPayload {
 }
 
 union CreateLessonStepPayloadResult =
-    CreateLessonStepPayload
+  | CreateLessonStepPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2009,7 +2009,7 @@ type UpdateLessonStepPayload {
 }
 
 union UpdateLessonStepPayloadResult =
-    UpdateLessonStepPayload
+  | UpdateLessonStepPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2025,7 +2025,7 @@ type DeleteLessonStepPayload {
 }
 
 union DeleteLessonStepPayloadResult =
-    DeleteLessonStepPayload
+  | DeleteLessonStepPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2042,7 +2042,7 @@ type CreateLmsPayload {
 }
 
 union CreateLmsPayloadResult =
-    CreateLmsPayload
+  | CreateLmsPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2059,7 +2059,7 @@ type UpdateLmsPayload {
 }
 
 union UpdateLmsPayloadResult =
-    UpdateLmsPayload
+  | UpdateLmsPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2075,7 +2075,7 @@ type DeleteLmsPayload {
 }
 
 union DeleteLmsPayloadResult =
-    DeleteLmsPayload
+  | DeleteLmsPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2096,7 +2096,7 @@ type CreateOrganizationPayload {
 }
 
 union CreateOrganizationPayloadResult =
-    CreateOrganizationPayload
+  | CreateOrganizationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2117,7 +2117,7 @@ type UpdateOrganizationPayload {
 }
 
 union UpdateOrganizationPayloadResult =
-    UpdateOrganizationPayload
+  | UpdateOrganizationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2133,7 +2133,7 @@ type DeleteOrganizationPayload {
 }
 
 union DeleteOrganizationPayloadResult =
-    DeleteOrganizationPayload
+  | DeleteOrganizationPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2156,7 +2156,7 @@ type CreateStudentPayload {
 }
 
 union CreateStudentPayloadResult =
-    CreateStudentPayload
+  | CreateStudentPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2179,7 +2179,7 @@ type UpdateStudentPayload {
 }
 
 union UpdateStudentPayloadResult =
-    UpdateStudentPayload
+  | UpdateStudentPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2195,7 +2195,7 @@ type DeleteStudentPayload {
 }
 
 union DeleteStudentPayloadResult =
-    DeleteStudentPayload
+  | DeleteStudentPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2219,7 +2219,7 @@ type CreateStudentGroupPayload {
 }
 
 union CreateStudentGroupPayloadResult =
-    CreateStudentGroupPayload
+  | CreateStudentGroupPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2243,7 +2243,7 @@ type UpdateStudentGroupPayload {
 }
 
 union UpdateStudentGroupPayloadResult =
-    UpdateStudentGroupPayload
+  | UpdateStudentGroupPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2259,7 +2259,7 @@ type DeleteStudentGroupPayload {
 }
 
 union DeleteStudentGroupPayloadResult =
-    DeleteStudentGroupPayload
+  | DeleteStudentGroupPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2278,7 +2278,7 @@ type CreateStudentGroupPackageAssignmentPayload {
 }
 
 union CreateStudentGroupPackageAssignmentPayloadResult =
-    CreateStudentGroupPackageAssignmentPayload
+  | CreateStudentGroupPackageAssignmentPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2297,7 +2297,7 @@ type UpdateStudentGroupPackageAssignmentPayload {
 }
 
 union UpdateStudentGroupPackageAssignmentPayloadResult =
-    UpdateStudentGroupPackageAssignmentPayload
+  | UpdateStudentGroupPackageAssignmentPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2313,7 +2313,7 @@ type DeleteStudentGroupPackageAssignmentPayload {
 }
 
 union DeleteStudentGroupPackageAssignmentPayloadResult =
-    DeleteStudentGroupPackageAssignmentPayload
+  | DeleteStudentGroupPackageAssignmentPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2332,7 +2332,7 @@ type CreateStudentStudentGroupAffiliationPayload {
 }
 
 union CreateStudentStudentGroupAffiliationPayloadResult =
-    CreateStudentStudentGroupAffiliationPayload
+  | CreateStudentStudentGroupAffiliationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2351,7 +2351,7 @@ type UpdateStudentStudentGroupAffiliationPayload {
 }
 
 union UpdateStudentStudentGroupAffiliationPayloadResult =
-    UpdateStudentStudentGroupAffiliationPayload
+  | UpdateStudentStudentGroupAffiliationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2367,7 +2367,7 @@ type DeleteStudentStudentGroupAffiliationPayload {
 }
 
 union DeleteStudentStudentGroupAffiliationPayloadResult =
-    DeleteStudentStudentGroupAffiliationPayload
+  | DeleteStudentStudentGroupAffiliationPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2390,7 +2390,7 @@ type CreateTeacherPayload {
 }
 
 union CreateTeacherPayloadResult =
-    CreateTeacherPayload
+  | CreateTeacherPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2413,7 +2413,7 @@ type UpdateTeacherPayload {
 }
 
 union UpdateTeacherPayloadResult =
-    UpdateTeacherPayload
+  | UpdateTeacherPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2429,7 +2429,7 @@ type DeleteTeacherPayload {
 }
 
 union DeleteTeacherPayloadResult =
-    DeleteTeacherPayload
+  | DeleteTeacherPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2449,7 +2449,7 @@ type CreateTeacherOrganizationPayload {
 }
 
 union CreateTeacherOrganizationPayloadResult =
-    CreateTeacherOrganizationPayload
+  | CreateTeacherOrganizationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2469,7 +2469,7 @@ type UpdateTeacherOrganizationPayload {
 }
 
 union UpdateTeacherOrganizationPayloadResult =
-    UpdateTeacherOrganizationPayload
+  | UpdateTeacherOrganizationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2485,7 +2485,7 @@ type DeleteTeacherOrganizationPayload {
 }
 
 union DeleteTeacherOrganizationPayloadResult =
-    DeleteTeacherOrganizationPayload
+  | DeleteTeacherOrganizationPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2504,7 +2504,7 @@ type CreateTeacherOrganizationAffiliationPayload {
 }
 
 union CreateTeacherOrganizationAffiliationPayloadResult =
-    CreateTeacherOrganizationAffiliationPayload
+  | CreateTeacherOrganizationAffiliationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2523,7 +2523,7 @@ type UpdateTeacherOrganizationAffiliationPayload {
 }
 
 union UpdateTeacherOrganizationAffiliationPayloadResult =
-    UpdateTeacherOrganizationAffiliationPayload
+  | UpdateTeacherOrganizationAffiliationPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2539,7 +2539,7 @@ type DeleteTeacherOrganizationAffiliationPayload {
 }
 
 union DeleteTeacherOrganizationAffiliationPayloadResult =
-    DeleteTeacherOrganizationAffiliationPayload
+  | DeleteTeacherOrganizationAffiliationPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2558,7 +2558,7 @@ type CreateUserPayload {
 }
 
 union CreateUserPayloadResult =
-    CreateUserPayload
+  | CreateUserPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2577,7 +2577,7 @@ type UpdateUserPayload {
 }
 
 union UpdateUserPayloadResult =
-    UpdateUserPayload
+  | UpdateUserPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2593,7 +2593,7 @@ type DeleteUserPayload {
 }
 
 union DeleteUserPayloadResult =
-    DeleteUserPayload
+  | DeleteUserPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2612,7 +2612,7 @@ type CreateUserLessonHintStatusPayload {
 }
 
 union CreateUserLessonHintStatusPayloadResult =
-    CreateUserLessonHintStatusPayload
+  | CreateUserLessonHintStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2631,7 +2631,7 @@ type UpdateUserLessonHintStatusPayload {
 }
 
 union UpdateUserLessonHintStatusPayloadResult =
-    UpdateUserLessonHintStatusPayload
+  | UpdateUserLessonHintStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2647,7 +2647,7 @@ type DeleteUserLessonHintStatusPayload {
 }
 
 union DeleteUserLessonHintStatusPayloadResult =
-    DeleteUserLessonHintStatusPayload
+  | DeleteUserLessonHintStatusPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2668,7 +2668,7 @@ type CreateUserLessonQuizStatusPayload {
 }
 
 union CreateUserLessonQuizStatusPayloadResult =
-    CreateUserLessonQuizStatusPayload
+  | CreateUserLessonQuizStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2689,7 +2689,7 @@ type UpdateUserLessonQuizStatusPayload {
 }
 
 union UpdateUserLessonQuizStatusPayloadResult =
-    UpdateUserLessonQuizStatusPayload
+  | UpdateUserLessonQuizStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2705,7 +2705,7 @@ type DeleteUserLessonQuizStatusPayload {
 }
 
 union DeleteUserLessonQuizStatusPayloadResult =
-    DeleteUserLessonQuizStatusPayload
+  | DeleteUserLessonQuizStatusPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2729,7 +2729,7 @@ type CreateUserLessonStatusPayload {
 }
 
 union CreateUserLessonStatusPayloadResult =
-    CreateUserLessonStatusPayload
+  | CreateUserLessonStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2753,7 +2753,7 @@ type UpdateUserLessonStatusPayload {
 }
 
 union UpdateUserLessonStatusPayloadResult =
-    UpdateUserLessonStatusPayload
+  | UpdateUserLessonStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2769,7 +2769,7 @@ type DeleteUserLessonStatusPayload {
 }
 
 union DeleteUserLessonStatusPayloadResult =
-    DeleteUserLessonStatusPayload
+  | DeleteUserLessonStatusPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
@@ -2790,7 +2790,7 @@ type CreateUserLessonStepStatusPayload {
 }
 
 union CreateUserLessonStepStatusPayloadResult =
-    CreateUserLessonStepStatusPayload
+  | CreateUserLessonStepStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
 
@@ -2811,7 +2811,7 @@ type UpdateUserLessonStepStatusPayload {
 }
 
 union UpdateUserLessonStepStatusPayloadResult =
-    UpdateUserLessonStepStatusPayload
+  | UpdateUserLessonStepStatusPayload
   | PermissionDeniedError
   | UnknownRuntimeError
   | NotFoundError
@@ -2827,7 +2827,7 @@ type DeleteUserLessonStepStatusPayload {
 }
 
 union DeleteUserLessonStepStatusPayloadResult =
-    DeleteUserLessonStepStatusPayload
+  | DeleteUserLessonStepStatusPayload
   | UnknownRuntimeError
   | PermissionDeniedError
   | NotFoundError
