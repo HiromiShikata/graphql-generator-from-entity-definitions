@@ -59,7 +59,7 @@
     "typescript": "^5.1.3"
   },
   "dependencies": {
-    "ast-to-entity-definitions": "^1.8.2",
+    "ast-to-entity-definitions": "^3.0.0",
     "change-case-all": "^2.0.0",
     "commander": "^12.0.0"
   }
