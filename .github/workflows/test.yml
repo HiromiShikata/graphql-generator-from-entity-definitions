@@ -9,7 +9,7 @@ jobs:
     container:
       image: cimg/node:24.11.1
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install Dependencies
         run: npm ci
       - name: Format and Check
