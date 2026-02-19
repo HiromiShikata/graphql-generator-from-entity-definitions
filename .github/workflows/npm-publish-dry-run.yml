@@ -9,6 +9,8 @@ on:
 jobs:
   semantic-release-dry-run:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
