@@ -7,8 +7,8 @@ describe('FsFileRepository', () => {
     try {
       await repository.delete(filePath);
       await repository.delete(`./tmp`);
-    } catch (e) {
-      // do nothing
+    } catch {
+      // intentionally empty
     }
   });
 

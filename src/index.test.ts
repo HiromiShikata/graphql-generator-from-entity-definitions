@@ -160,7 +160,7 @@ type Mutation {
         typeof error !== 'object' ||
         !('stderr' in error) ||
         error.stderr === null ||
-        typeof error.stderr !== 'object'
+        (!(error.stderr instanceof Buffer) && typeof error.stderr !== 'string')
       ) {
         throw error;
       }
