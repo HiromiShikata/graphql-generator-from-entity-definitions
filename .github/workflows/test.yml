@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: cimg/node:24.15.0
+      image: cimg/node:24.16.0
     steps:
       - uses: actions/checkout@v6
       - name: Install Dependencies
