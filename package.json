@@ -62,6 +62,6 @@
   "dependencies": {
     "ast-to-entity-definitions": "^1.8.2",
     "change-case-all": "^2.0.0",
-    "commander": "^14.0.0"
+    "commander": "^15.0.0"
   }
 }
