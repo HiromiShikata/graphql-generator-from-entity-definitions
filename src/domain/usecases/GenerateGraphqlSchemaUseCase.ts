@@ -3,10 +3,10 @@ import { EntityDefinitionRepository } from './adapter-interfaces/EntityRelationD
 import { EntityDefinition } from '../entities/EntityDefinition';
 import { shouldBeNever } from '../../_shared/utility';
 import {
+  EntityPropertyDefinition,
   EntityPropertyDefinitionPrimitive,
   EntityPropertyDefinitionReferencedObject,
 } from '../entities/EntityPropertyDefinition';
-import { EntityPropertyDefinition } from 'ast-to-entity-definitions/bin/domain/entities/EntityPropertyDefinition';
 import { StringConvertor } from './adapter-interfaces/StringConvertor';
 const ERROR_TYPES = ['UNKNOWN_RUNTIME', 'PERMISSION_DENIED', 'NOT_FOUND'];
 
@@ -49,13 +49,18 @@ ${this.generateMutation(
 
       for (const property of entity.properties) {
         const name = property.name;
-
-        const type = property.isReference
-          ? `String${property.isNullable ? '' : '!'}`
-          : name === 'id'
-            ? 'ID!'
-            : this.mapToGraphQLType(entity, property) +
-              (property.isNullable ? '' : '!');
+        let type: string;
+        if (property.isReference) {
+          type = `String${property.isNullable ? '' : '!'}`;
+        } else if (property.propertyType === 'Id' || name === 'id') {
+          type = 'ID!';
+        } else if (property.propertyType === 'typedStruct') {
+          type = `String${property.isNullable ? '' : '!'}`;
+        } else {
+          type =
+            this.mapToGraphQLType(entity, property) +
+            (property.isNullable ? '' : '!');
+        }
         properties.push(`  ${name}: ${type}`);
         if (property.isReference) {
           properties.push(
@@ -98,7 +103,12 @@ ${properties.join('\n')}${
 }
 `);
       typeDefs.push(`${entity.properties
-        .filter((p): p is EntityPropertyDefinitionPrimitive => !p.isReference)
+        .filter(
+          (p): p is EntityPropertyDefinitionPrimitive =>
+            !p.isReference &&
+            p.propertyType !== 'Id' &&
+            p.propertyType !== 'typedStruct',
+        )
         .filter(
           (
             p,
@@ -268,8 +278,10 @@ ${errorTypes.join('\n')}`;
           return `  ${this.uncapitalize(
             property.targetEntityDefinitionName,
           )}Id: String!`;
-        } else if (property.name === 'id') {
+        } else if (property.propertyType === 'Id' || property.name === 'id') {
           return '  id: ID!';
+        } else if (property.propertyType === 'typedStruct') {
+          return `  ${property.name}: String${property.isNullable ? '' : '!'}`;
         } else {
           return (
             `  ${property.name}: ${this.mapToGraphQLType(entity, property)}` +
@@ -424,6 +436,8 @@ ${mutations.join('\n')}
         return 'String';
       case 'Date':
         return 'Date';
+      case 'struct':
+        return 'String';
       default:
         shouldBeNever(propertyType);
         throw new Error(
