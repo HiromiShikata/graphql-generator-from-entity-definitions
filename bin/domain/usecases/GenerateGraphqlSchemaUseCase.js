@@ -27,12 +27,21 @@ ${this.generateMutation(entityDefinitions, ignorePropertyNamesForCreation, ignor
                 const properties = [];
                 for (const property of entity.properties) {
                     const name = property.name;
-                    const type = property.isReference
-                        ? `String${property.isNullable ? '' : '!'}`
-                        : name === 'id'
-                            ? 'ID!'
-                            : this.mapToGraphQLType(entity, property) +
+                    let type;
+                    if (property.isReference) {
+                        type = `String${property.isNullable ? '' : '!'}`;
+                    }
+                    else if (property.propertyType === 'Id' || name === 'id') {
+                        type = 'ID!';
+                    }
+                    else if (property.propertyType === 'typedStruct') {
+                        type = `String${property.isNullable ? '' : '!'}`;
+                    }
+                    else {
+                        type =
+                            this.mapToGraphQLType(entity, property) +
                                 (property.isNullable ? '' : '!');
+                    }
                     properties.push(`  ${name}: ${type}`);
                     if (property.isReference) {
                         properties.push(`  ${property.name.replace(/Id$/, '')}: ${property.targetEntityDefinitionName}Result!`);
@@ -52,7 +61,9 @@ ${properties.join('\n')}${relatedEntities.length > 0 ? '\n' + relatedEntities.jo
 }
 `);
                 typeDefs.push(`${entity.properties
-                    .filter((p) => !p.isReference)
+                    .filter((p) => !p.isReference &&
+                    p.propertyType !== 'Id' &&
+                    p.propertyType !== 'typedStruct')
                     .filter((p) => !!p.acceptableValues && p.acceptableValues?.length > 0)
                     .map((p) => `enum ${entity.name}${this.stringConvertor.pascalCase(p.name)}Type {
 ${p.acceptableValues
@@ -173,8 +184,11 @@ ${errorTypes.join('\n')}`;
                     if (property.isReference) {
                         return `  ${this.uncapitalize(property.targetEntityDefinitionName)}Id: String!`;
                     }
-                    else if (property.name === 'id') {
+                    else if (property.propertyType === 'Id' || property.name === 'id') {
                         return '  id: ID!';
+                    }
+                    else if (property.propertyType === 'typedStruct') {
+                        return `  ${property.name}: String${property.isNullable ? '' : '!'}`;
                     }
                     else {
                         return (`  ${property.name}: ${this.mapToGraphQLType(entity, property)}` +
@@ -296,6 +310,8 @@ ${mutations.join('\n')}
                     return 'String';
                 case 'Date':
                     return 'Date';
+                case 'struct':
+                    return 'String';
                 default:
                     (0, utility_1.shouldBeNever)(propertyType);
                     throw new Error(`Invalid property type: ${JSON.stringify(propertyType)}`);
