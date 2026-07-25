@@ -1425,6 +1425,51 @@ type Mutation {
 
       expect(mutation.trim()).toEqual(expectedMutation.trim());
     });
+
+    it('should map typedStruct property to String type in mutation input', () => {
+      const { useCase } = createUseCaseAndMockRepositories();
+      const entityWithTypedStruct: EntityDefinition[] = [
+        {
+          name: 'TestEntity',
+          properties: [
+            {
+              isReference: false,
+              propertyType: 'typedStruct',
+              name: 'config',
+              structTypeName: 'Config',
+              isUnique: false,
+              isNullable: false,
+              isArray: false,
+            },
+          ],
+        },
+      ];
+      const mutation = useCase.generateMutation(entityWithTypedStruct, [], []);
+      expect(mutation).toContain('  config: String!');
+    });
+
+    it('should map nullable typedStruct property to nullable String type in mutation input', () => {
+      const { useCase } = createUseCaseAndMockRepositories();
+      const entityWithTypedStruct: EntityDefinition[] = [
+        {
+          name: 'TestEntity',
+          properties: [
+            {
+              isReference: false,
+              propertyType: 'typedStruct',
+              name: 'config',
+              structTypeName: 'Config',
+              isUnique: false,
+              isNullable: true,
+              isArray: false,
+            },
+          ],
+        },
+      ];
+      const mutation = useCase.generateMutation(entityWithTypedStruct, [], []);
+      expect(mutation).toContain('  config: String');
+      expect(mutation).not.toContain('  config: String!');
+    });
   });
   describe('generateTypes', () => {
     it('should generate type definitions for all entity definitions', () => {
@@ -1506,6 +1551,51 @@ type UserBook {
       const typeDefs = useCase.generateTypes(entityDefinitions);
 
       expect(typeDefs.trim()).toEqual(expectedTypeDefs.trim());
+    });
+
+    it('should map typedStruct property to String type', () => {
+      const { useCase } = createUseCaseAndMockRepositories();
+      const entityWithTypedStruct: EntityDefinition[] = [
+        {
+          name: 'TestEntity',
+          properties: [
+            {
+              isReference: false,
+              propertyType: 'typedStruct',
+              name: 'config',
+              structTypeName: 'Config',
+              isUnique: false,
+              isNullable: false,
+              isArray: false,
+            },
+          ],
+        },
+      ];
+      const typeDefs = useCase.generateTypes(entityWithTypedStruct);
+      expect(typeDefs).toContain('  config: String!');
+    });
+
+    it('should map nullable typedStruct property to nullable String type', () => {
+      const { useCase } = createUseCaseAndMockRepositories();
+      const entityWithTypedStruct: EntityDefinition[] = [
+        {
+          name: 'TestEntity',
+          properties: [
+            {
+              isReference: false,
+              propertyType: 'typedStruct',
+              name: 'config',
+              structTypeName: 'Config',
+              isUnique: false,
+              isNullable: true,
+              isArray: false,
+            },
+          ],
+        },
+      ];
+      const typeDefs = useCase.generateTypes(entityWithTypedStruct);
+      expect(typeDefs).toContain('  config: String');
+      expect(typeDefs).not.toContain('  config: String!');
     });
   });
   describe('generateErrorTypes', () => {
@@ -1782,6 +1872,7 @@ type Query {
       ${'number'}  | ${'Int'}
       ${'string'}  | ${'String'}
       ${'Date'}    | ${'Date'}
+      ${'struct'}  | ${'String'}
     `(
       'maps $propertyType to $expected',
       ({
