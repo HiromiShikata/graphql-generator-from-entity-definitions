@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
-    "moduleResolution": "Node",
-    "ignoreDeprecations": "6.0",
+    "resolvePackageJsonExports": false,
     "esModuleInterop": true,
     "outDir": "./bin",
     "sourceMap": true,
