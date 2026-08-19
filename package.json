@@ -8,7 +8,7 @@
     "lint": "eslint src",
     "lint-fix": "eslint src --fix",
     "fmt": "npm run prettier && npm run lint-fix",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node_modules/typescript7/bin/tsc -p tsconfig.build.json",
     "build-commit": "npm run build && git add bin && git commit -m'autogen: build' -m'npm run build'",
     "test": "jest"
   },
@@ -57,7 +57,8 @@
     "prettier": "^3.0.0",
     "semantic-release": "^25.0.0",
     "ts-jest": "^29.1.0",
-    "typescript": "^7.0.0"
+    "typescript": "npm:@typescript/typescript6@^6.0.0",
+    "typescript7": "npm:typescript@^7.0.0"
   },
   "dependencies": {
     "ast-to-entity-definitions": "^3.5.1",
