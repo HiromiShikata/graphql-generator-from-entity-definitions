@@ -2,7 +2,7 @@
 .gitignore
 .prettierignore
 .gitkeep
-
+*.sh
 
 .idea
 reports
