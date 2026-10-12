@@ -31,9 +31,11 @@ const bumpedDevDependencyTargetVersions: {
 ];
 
 describe('package-lock.json resolved versions after dependency bump', () => {
-  bumpedDevDependencyTargetVersions.forEach(({ packageName, targetVersion }) => {
-    it(`resolves ${packageName} to ${targetVersion}`, () => {
-      expect(resolvedVersionOf(packageName)).toEqual(targetVersion);
-    });
-  });
+  bumpedDevDependencyTargetVersions.forEach(
+    ({ packageName, targetVersion }) => {
+      it(`resolves ${packageName} to ${targetVersion}`, () => {
+        expect(resolvedVersionOf(packageName)).toEqual(targetVersion);
+      });
+    },
+  );
 });
