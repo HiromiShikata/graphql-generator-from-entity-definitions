@@ -53,7 +53,6 @@ const isWithinRange = (
   isAtLeast(version, lowerBoundInclusive) &&
   isBelow(version, upperBoundExclusive);
 
-// GHSA-mwp4-54f8-5fhr (ip-address): vulnerable_version_range "<= 10.3.0"
 const isIpAddressPackageKey = (packageKey: string): boolean =>
   packageKey === 'node_modules/ip-address' ||
   packageKey.endsWith('/ip-address');
@@ -72,7 +71,6 @@ const ipAddressEntries: { packageKey: string; version: string }[] =
 const isVulnerableIpAddressVersion = (version: string): boolean =>
   isAtMost(version, [10, 3, 0]);
 
-// GHSA-w293-vg96-wgc3 (undici): vulnerable if >=7.24.1,<7.29.1 or >=8.0.0,<8.10.2
 const isUndiciPackageKey = (packageKey: string): boolean =>
   packageKey === 'node_modules/undici' || packageKey.endsWith('/undici');
 
@@ -92,10 +90,6 @@ const isVulnerableUndiciVersion = (version: string): boolean =>
   isWithinRange(version, [7, 24, 1], [7, 29, 1]) ||
   isWithinRange(version, [8, 0, 0], [8, 10, 2]);
 
-// GHSA-6j4f-fj2g-mc7p and GHSA-qhr7-859c-m2p7 (brace-expansion): scoped only to
-// the exact top-level lockfile key. The nested entry bundled inside npm's own
-// bundleDependencies tree (node_modules/npm/node_modules/brace-expansion) is a
-// known, separately-tracked gap and is intentionally excluded from this check.
 const braceExpansionEntries: { packageKey: string; version: string }[] =
   Object.entries(lockfile.packages ?? {})
     .filter(
@@ -164,7 +158,7 @@ describe('package-lock.json undici resolved version', () => {
   });
 });
 
-describe('package-lock.json top-level brace-expansion resolved version', () => {
+describe('package-lock.json top-level brace-expansion resolved version (scoped to node_modules/brace-expansion only; the npm-bundled nested instance at node_modules/npm/node_modules/brace-expansion is tracked separately)', () => {
   it('contains the top-level node_modules/brace-expansion package entry with a version field', () => {
     expect(braceExpansionEntries.length).toBeGreaterThan(0);
   });
