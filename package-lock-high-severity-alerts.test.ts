@@ -90,6 +90,70 @@ const isVulnerableUndiciVersion = (version: string): boolean =>
   isWithinRange(version, [7, 24, 1], [7, 29, 1]) ||
   isWithinRange(version, [8, 0, 0], [8, 10, 2]);
 
+type AdvisoryRange = {
+  ghsaId: string;
+  lowerBoundInclusive: VersionTuple;
+  upperBoundExclusive: VersionTuple;
+};
+
+const undiciHighSeverityAdvisoryRanges: AdvisoryRange[] = [
+  {
+    ghsaId: 'GHSA-2m5v-pch6-74hx',
+    lowerBoundInclusive: [4, 0, 0],
+    upperBoundExclusive: [6, 29, 1],
+  },
+  {
+    ghsaId: 'GHSA-2m5v-pch6-74hx',
+    lowerBoundInclusive: [7, 0, 0],
+    upperBoundExclusive: [7, 30, 1],
+  },
+  {
+    ghsaId: 'GHSA-4w7w-5xrc-9h26',
+    lowerBoundInclusive: [7, 0, 0],
+    upperBoundExclusive: [7, 30, 1],
+  },
+  {
+    ghsaId: 'GHSA-qrxm-fqhp-jwvm',
+    lowerBoundInclusive: [4, 2, 1],
+    upperBoundExclusive: [6, 29, 1],
+  },
+  {
+    ghsaId: 'GHSA-qrxm-fqhp-jwvm',
+    lowerBoundInclusive: [7, 0, 0],
+    upperBoundExclusive: [7, 30, 1],
+  },
+  {
+    ghsaId: 'GHSA-xjj6-f33q-929c',
+    lowerBoundInclusive: [7, 18, 0],
+    upperBoundExclusive: [7, 30, 1],
+  },
+  {
+    ghsaId: 'GHSA-xjj6-f33q-929c',
+    lowerBoundInclusive: [6, 23, 0],
+    upperBoundExclusive: [6, 29, 1],
+  },
+];
+
+const undiciAdvisoryEvaluations: {
+  packageKey: string;
+  version: string;
+  ghsaId: string;
+  isVulnerable: boolean;
+}[] = undiciEntries.flatMap(({ packageKey, version }) =>
+  undiciHighSeverityAdvisoryRanges.map(
+    ({ ghsaId, lowerBoundInclusive, upperBoundExclusive }) => ({
+      packageKey,
+      version,
+      ghsaId,
+      isVulnerable: isWithinRange(
+        version,
+        lowerBoundInclusive,
+        upperBoundExclusive,
+      ),
+    }),
+  ),
+);
+
 const braceExpansionEntries: { packageKey: string; version: string }[] =
   Object.entries(lockfile.packages ?? {})
     .filter(
@@ -191,5 +255,18 @@ describe('package-lock.json top-level brace-expansion resolved version (scoped t
         isVulnerable: false,
       });
     });
+  });
+});
+
+describe('package-lock.json undici resolved version against high-severity Dependabot advisories', () => {
+  it('does not resolve any undici entry into a high-severity advisory range', () => {
+    const violations = undiciAdvisoryEvaluations
+      .filter(({ isVulnerable }) => isVulnerable)
+      .map(({ packageKey, version, ghsaId }) => ({
+        packageKey,
+        version,
+        ghsaId,
+      }));
+    expect(violations).toEqual([]);
   });
 });
