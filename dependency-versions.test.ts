@@ -22,10 +22,10 @@ const bumpedDevDependencyTargetVersions: {
   { packageName: '@types/node', targetVersion: '26.6.5' },
   {
     packageName: '@typescript-eslint/eslint-plugin',
-    targetVersion: '8.71.1',
+    targetVersion: '8.73.0',
   },
-  { packageName: '@typescript-eslint/parser', targetVersion: '8.71.1' },
-  { packageName: 'eslint', targetVersion: '10.12.0' },
+  { packageName: '@typescript-eslint/parser', targetVersion: '8.73.0' },
+  { packageName: 'eslint', targetVersion: '10.15.0' },
   { packageName: 'prettier', targetVersion: '3.9.10' },
   { packageName: 'ts-jest', targetVersion: '29.4.14' },
 ];

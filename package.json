@@ -46,10 +46,10 @@
     "@semantic-release/git": "^11.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "26.6.5",
-    "@typescript-eslint/eslint-plugin": "8.71.1",
-    "@typescript-eslint/parser": "8.71.1",
+    "@typescript-eslint/eslint-plugin": "8.73.0",
+    "@typescript-eslint/parser": "8.73.0",
     "conventional-changelog-conventionalcommits": "^10.4.1",
-    "eslint": "10.12.0",
+    "eslint": "10.15.0",
     "eslint-plugin-import-x": "^4.18.1",
     "jest": "^30.5.2",
     "jest-html-reporter": "^4.4.3",
@@ -64,5 +64,26 @@
     "ast-to-entity-definitions": "^3.5.1",
     "change-case-all": "^2.2.0",
     "commander": "^15.1.0"
+  },
+  "overrides": {
+    "ast-to-entity-definitions": {
+      "minimatch": "^11.0.1"
+    },
+    "@ts-morph/common": {
+      "minimatch": "^11.0.1"
+    },
+    "test-exclude": {
+      "minimatch": "^11.0.1",
+      "glob": "^14.0.2"
+    },
+    "@jest/reporters": {
+      "glob": "^14.0.2"
+    },
+    "jest-config": {
+      "glob": "^14.0.2"
+    },
+    "jest-runtime": {
+      "glob": "^14.0.2"
+    }
   }
 }
